@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Baltic Dispatch — RV 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0b09;
+  --paper: #f5ede0;
+  --gold: #c8841a;
+  --gold-light: #e8a83a;
+  --teal: #2a6a78;
+  --teal-light: #3a8a9a;
+  --text: #e8ddd0;
+  --muted: #9a8e84;
+  --card-bg: #1a1612;
+  --card-border: rgba(200,132,26,0.15);
+  --est: #1a7a48; --est-dim: rgba(26,122,72,0.18);
+  --lat: #9a1a28; --lat-dim: rgba(154,26,40,0.18);
+  --lit: #2a5e1a; --lit-dim: rgba(42,94,26,0.18);
+  --pol: #b81c28; --pol-dim: rgba(184,28,40,0.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem 1.5rem 3rem;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#050e14 0%,#0a2030 30%,#122840 55%,#0a1820 80%,#080c0a 100%);z-index:0}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(200,132,26,0.12) 0%,transparent 70%)}
+.hero-waves{position:absolute;bottom:0;left:0;right:0;height:180px;z-index:1;opacity:.25}
+.hero-label{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:4px;color:var(--gold);margin-bottom:.6rem;position:relative;z-index:2}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,11vw,5rem);font-weight:900;line-height:.95;position:relative;z-index:2;color:#fff}
+.hero h1 em{font-style:italic;color:var(--gold-light)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem;position:relative;z-index:2}
+.hero-pill{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:2px;padding:.3rem .8rem;font-size:.75rem;letter-spacing:.5px;color:var(--muted)}
+.hero-pill span{color:var(--text)}
+.hero-scroll{position:absolute;bottom:1.5rem;right:1.5rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.3rem;opacity:.5}
+.hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--gold));animation:scrollpulse 2s ease-in-out infinite}
+@keyframes scrollpulse{0%,100%{opacity:.3;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+
+/* STICKY NAV */
+.country-nav{position:sticky;top:0;z-index:500;background:rgba(14,11,9,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,132,26,0.2);display:flex;overflow-x:auto;scrollbar-width:none}
+.country-nav::-webkit-scrollbar{display:none}
+.country-nav a{flex-shrink:0;padding:.75rem 1rem;font-size:.75rem;font-weight:600;letter-spacing:.5px;color:var(--muted);text-decoration:none;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.country-nav a:hover,.country-nav a.active{color:var(--gold-light);border-bottom-color:var(--gold)}
+.country-nav a.est:hover,.country-nav a.est.active{color:#4acf88;border-bottom-color:var(--est)}
+.country-nav a.lat:hover,.country-nav a.lat.active{color:#e85a72;border-bottom-color:var(--lat)}
+.country-nav a.lit:hover,.country-nav a.lit.active{color:#5acf4a;border-bottom-color:var(--lit)}
+.country-nav a.pol:hover,.country-nav a.pol.active{color:#f06080;border-bottom-color:var(--pol)}
+.nav-progress{margin-left:auto;display:flex;align-items:center;padding:.75rem 1rem;font-size:.72rem;color:var(--muted);white-space:nowrap;gap:.35rem;flex-shrink:0}
+.nav-progress strong{color:var(--gold-light)}
+
+/* FILTER BAR */
+.filter-bar{padding:.75rem 1.25rem;display:flex;gap:.45rem;overflow-x:auto;scrollbar-width:none;background:rgba(14,11,9,0.6);border-bottom:1px solid rgba(255,255,255,0.05)}
+.filter-bar::-webkit-scrollbar{display:none}
+.filter-pill{flex-shrink:0;padding:.35rem .85rem;border-radius:20px;font-size:.72rem;font-weight:500;letter-spacing:.3px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.filter-pill:hover{border-color:rgba(200,132,26,0.4);color:var(--text)}
+.filter-pill.active{background:var(--gold);border-color:var(--gold);color:#000;font-weight:600}
+
+/* SEARCH */
+.search-bar{padding:.6rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.05)}
+.search-inner{position:relative}
+.search-inner input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:3px;padding:.6rem .9rem .6rem 2.2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--text);outline:none;transition:border-color .2s}
+.search-inner input::placeholder{color:var(--muted)}
+.search-inner input:focus{border-color:rgba(200,132,26,0.5)}
+.search-icon{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem;pointer-events:none}
+.search-clear{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:1rem;cursor:pointer;display:none;background:none;border:none;padding:.2rem}
+.search-clear.show{display:block}
+
+/* WISHLIST TOGGLE */
+.view-bar{padding:.5rem 1.25rem;display:flex;gap:.6rem;align-items:center}
+.view-btn{padding:.3rem .75rem;font-size:.75rem;border-radius:3px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+.view-btn.active{background:rgba(200,132,26,0.15);border-color:var(--gold);color:var(--gold-light)}
+.view-count{font-size:.72rem;color:var(--muted);margin-left:auto}
+
+/* AI BANNER */
+.ai-banner{margin:1.5rem 1.25rem;padding:1rem 1.25rem;background:linear-gradient(135deg,#0a2018,#081a28);border:1px solid rgba(46,204,113,0.25);border-radius:4px;display:flex;gap:.875rem;align-items:flex-start}
+.ai-dot{width:8px;height:8px;border-radius:50%;background:#2ecc71;flex-shrink:0;margin-top:5px;box-shadow:0 0 8px #2ecc71;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ai-banner p{font-size:.82rem;color:#7abfa0;line-height:1.5}
+.ai-banner strong{color:#a8e8c8}
+.ai-banner a{color:#2ecc71;font-weight:600}
+
+/* CHAPTER STRUCTURE */
+.chapter{padding:0 0 2.5rem}
+.chapter-header{padding:2rem 1.25rem 1.5rem;position:relative}
+.chapter-eyebrow{font-family:'Bebas Neue',sans-serif;font-size:.78rem;letter-spacing:3px;color:var(--muted);margin-bottom:.5rem}
+.chapter-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1;color:#fff}
+.chapter-title em{font-style:italic}
+.chapter-rule{height:1px;margin:1rem 0 0;background:linear-gradient(to right,var(--gold),transparent)}
+.chapter-intro{padding:.75rem 1.25rem 0;font-size:.9rem;color:var(--muted);font-style:italic;line-height:1.6}
+.est-chapter .chapter-rule{background:linear-gradient(to right,var(--est),transparent)}
+.lat-chapter .chapter-rule{background:linear-gradient(to right,var(--lat),transparent)}
+.lit-chapter .chapter-rule{background:linear-gradient(to right,var(--lit),transparent)}
+.pol-chapter .chapter-rule{background:linear-gradient(to right,var(--pol),transparent)}
+
+/* BADGE */
+.country-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:.72rem;padding:.3rem .75rem;border-radius:2px;margin-bottom:.75rem}
+.est-badge{background:var(--est-dim);color:#4acf88;border:1px solid rgba(26,122,72,0.3)}
+.lat-badge{background:var(--lat-dim);color:#e85a72;border:1px solid rgba(154,26,40,0.3)}
+.lit-badge{background:var(--lit-dim);color:#5acf4a;border:1px solid rgba(42,94,26,0.3)}
+.pol-badge{background:var(--pol-dim);color:#f06080;border:1px solid rgba(184,28,40,0.3)}
+
+/* CARDS & GEMS */
+.cards{padding:0 1.25rem;display:flex;flex-direction:column;gap:.875rem}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:3px;padding:1.1rem 1.1rem 1rem;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.est-card::before{background:var(--est)}
+.lat-card::before{background:var(--lat)}
+.lit-card::before{background:var(--lit)}
+.pol-card::before{background:var(--pol)}
+.gold-card::before{background:var(--gold)}
+.card-type{font-family:'Bebas Neue',sans-serif;font-size:.7rem;letter-spacing:2.5px;color:var(--muted);margin-bottom:.75rem}
+
+/* DEST ITEMS — individual filterable units */
+.dest-item{display:flex;gap:.75rem;margin-bottom:1.1rem;padding-bottom:1.1rem;border-bottom:1px solid rgba(255,255,255,0.05);transition:opacity .25s,max-height .3s}
+.dest-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.dest-item.hidden,.dest-card.hidden{display:none}
+.dest-item.search-dim{opacity:.25}
+.gem-rating{flex-shrink:0;font-size:.8rem;line-height:1.8;letter-spacing:-1px}
+.gem-body{flex:1}
+.gem-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#fff;line-height:1.2;margin-bottom:.2rem}
+.gem-desc{font-size:.82rem;color:var(--muted);line-height:1.55}
+.gem-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem}
+.tag{font-size:.67rem;letter-spacing:.4px;padding:.15rem .5rem;border-radius:2px;background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid rgba(255,255,255,0.08)}
+.tag-gold{background:rgba(200,132,26,0.12);color:var(--gold-light);border-color:rgba(200,132,26,0.2)}
+.tag-cw{background:rgba(80,60,120,0.2);color:#b0a0e0;border-color:rgba(120,100,180,0.3)}
+
+/* DEST ACTIONS (star + check) */
+.dest-actions{display:flex;gap:.4rem;align-items:center;margin-top:.6rem}
+.btn-star,.btn-check{background:none;border:1px solid rgba(255,255,255,0.1);border-radius:3px;padding:.25rem .6rem;font-size:.75rem;color:var(--muted);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.btn-star:hover{border-color:var(--gold);color:var(--gold)}
+.btn-star.saved{background:rgba(200,132,26,0.15);border-color:var(--gold);color:var(--gold-light)}
+.btn-check.done{background:rgba(46,204,113,0.12);border-color:#2ecc71;color:#2ecc71}
+.btn-detail{background:none;border:none;padding:0;font-size:.75rem;color:var(--teal-light);cursor:pointer;margin-left:auto;text-decoration:underline;text-underline-offset:3px}
+.btn-detail:hover{color:var(--gold-light)}
+
+/* FESTIVAL BOX */
+.festival{background:linear-gradient(135deg,#120a20 0%,#0c1830 100%);border:1px solid rgba(200,132,26,0.35);border-radius:3px;padding:1.1rem;margin:0 1.25rem 0.875rem}
+.festival-header{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.75rem}
+.festival-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+.festival-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--gold-light);line-height:1.2}
+.festival-dates{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+.festival p{font-size:.83rem;color:var(--muted);line-height:1.55;margin-bottom:.6rem}
+.festival ul{margin-left:1rem;font-size:.82rem;color:var(--muted);line-height:1.8}
+.festival li::marker{color:var(--gold)}
+
+/* FOOD GRID */
+.food-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.food-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:3px;padding:.7rem .75rem}
+.food-emoji{font-size:1.2rem;display:block;margin-bottom:.3rem}
+.food-name{font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.15rem}
+.food-note{font-size:.75rem;color:var(--muted);line-height:1.4}
+
+/* STAY ITEMS */
+.stay{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.75rem;padding-bottom:.75rem;border-bottom:1px solid rgba(255,255,255,0.05)}
+.stay:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.stay-icon{font-size:1.1rem;flex-shrink:0;margin-top:2px}
+.stay-name{font-weight:600;font-size:.87rem;color:var(--text)}
+.stay-desc{font-size:.78rem;color:var(--muted);line-height:1.4;margin-top:.15rem}
+
+/* ROUTE MAP */
+.map-section{padding:0 1.25rem 1.5rem}
+.map-wrap{background:rgba(10,20,35,0.7);border:1px solid rgba(200,132,26,0.15);border-radius:4px;padding:1rem;overflow:hidden}
+.map-title{font-family:'Bebas Neue',sans-serif;font-size:.75rem;letter-spacing:3px;color:var(--muted);margin-bottom:.75rem}
+.route-svg{width:100%;display:block}
+.route-svg .coastline{fill:none;stroke:rgba(42,106,120,0.25);stroke-width:1.2}
+.route-svg .sea{fill:rgba(10,20,35,0.5)}
+.route-svg .land{fill:#111a12;stroke:rgba(255,255,255,0.06);stroke-width:.5}
+.route-svg .route-path{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-dasharray:4 3;stroke-linecap:round;stroke-linejoin:round}
+.route-svg .route-path.animated{stroke-dashoffset:0;animation:drawRoute 3s ease forwards}
+@keyframes drawRoute{from{stroke-dashoffset:800}to{stroke-dashoffset:0}}
+.route-svg .stop-dot{cursor:pointer;transition:r .2s}
+.route-svg .stop-dot:hover{r:6}
+.route-svg .stop-label{font-family:'DM Sans',sans-serif;font-size:8.5px;fill:var(--muted);pointer-events:none}
+.route-svg .stop-label.highlight{fill:var(--gold-light)}
+
+/* ROUTE TIMELINE */
+.route-timeline{padding:.5rem 1.25rem}
+.rt-item{display:flex;gap:1rem;padding-bottom:1.4rem;position:relative}
+.rt-item:not(:last-child)::after{content:'';position:absolute;left:11px;top:24px;bottom:0;width:1px;background:repeating-linear-gradient(to bottom,rgba(200,132,26,0.3) 0,rgba(200,132,26,0.3) 4px,transparent 4px,transparent 8px)}
+.rt-dot{width:23px;height:23px;border-radius:50%;border:2px solid;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.6rem}
+.rt-body{flex:1;padding-top:1px}
+.rt-date{font-size:.72rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.1rem}
+.rt-place{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#fff;margin-bottom:.1rem}
+.rt-note{font-size:.8rem;color:var(--muted);line-height:1.45}
+
+/* PRACTICAL */
+.practical-grid{padding:0 1.25rem;display:flex;flex-direction:column;gap:.875rem}
+.prac-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:3px;padding:1rem}
+.prac-title{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:.8rem;color:var(--gold);margin-bottom:.75rem}
+.prac-row{display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.5rem;font-size:.82rem}
+.prac-flag{flex-shrink:0;font-size:.9rem;width:1.4rem}
+.prac-text{color:var(--muted);line-height:1.4}
+.prac-text strong{color:var(--text)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:800;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{width:100%;max-height:85svh;background:#18140f;border-top:1px solid rgba(200,132,26,0.3);border-radius:8px 8px 0 0;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.8,.4,1);padding:1.5rem 1.25rem 3rem}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-handle{width:36px;height:3px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 1.25rem}
+.modal-eyebrow{font-family:'Bebas Neue',sans-serif;font-size:.72rem;letter-spacing:3px;color:var(--muted);margin-bottom:.4rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:1rem}
+.modal-desc{font-size:.87rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem}
+.modal-details{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem}
+.modal-detail-row{display:flex;gap:.6rem;font-size:.82rem}
+.modal-detail-icon{flex-shrink:0;width:1.2rem}
+.modal-detail-text{color:var(--muted)}
+.modal-detail-text strong{color:var(--text)}
+.modal-actions{display:flex;gap:.6rem}
+.modal-btn{flex:1;padding:.7rem;border-radius:3px;font-size:.82rem;font-weight:600;border:1px solid;cursor:pointer;text-align:center;transition:all .2s}
+.modal-btn-star{background:rgba(200,132,26,0.1);border-color:rgba(200,132,26,0.3);color:var(--gold-light)}
+.modal-btn-star:hover,.modal-btn-star.saved{background:rgba(200,132,26,0.25);border-color:var(--gold)}
+.modal-btn-check{background:rgba(46,204,113,0.08);border-color:rgba(46,204,113,0.25);color:#5acf8a}
+.modal-btn-check:hover,.modal-btn-check.done{background:rgba(46,204,113,0.2);border-color:#2ecc71}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;padding:.25rem}
+
+/* FAB */
+.fab{position:fixed;bottom:1.75rem;right:1.25rem;z-index:700;width:52px;height:52px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 18px rgba(200,132,26,0.45);transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
+.fab:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(200,132,26,0.6)}
+.fab:active{transform:scale(0.95)}
+.fab-tooltip{position:fixed;bottom:5.5rem;right:1.25rem;z-index:700;background:#18140f;border:1px solid rgba(200,132,26,0.3);border-radius:3px;padding:.4rem .75rem;font-size:.72rem;color:var(--gold-light);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s}
+.fab:hover+.fab-tooltip,.fab-tooltip.show{opacity:1}
+
+/* NO-RESULTS */
+.no-results{display:none;padding:2rem 1.25rem;text-align:center;color:var(--muted);font-size:.87rem;font-style:italic}
+.no-results.show{display:block}
+
+/* SCROLL ANIMATION */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* FOOTER */
+footer{padding:2rem 1.25rem;text-align:center;border-top:1px solid rgba(255,255,255,0.06);margin-top:1rem}
+footer p{font-size:.78rem;color:var(--muted);line-height:1.8}
+footer a{color:var(--gold-light)}
+.compass{font-size:2rem;margin-bottom:.5rem;opacity:.3}
+
+/* EMPTY STATE for filtered sections */
+.chapter-empty{display:none;padding:.5rem 1.25rem 1rem;font-size:.82rem;color:var(--muted);font-style:italic}
+.chapter.all-hidden .chapter-empty{display:block}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-waves" viewBox="0 0 1440 180" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,90 C240,20 480,160 720,90 C960,20 1200,160 1440,90 L1440,180 L0,180 Z" fill="rgba(200,132,26,0.06)"/>
+    <path d="M0,120 C360,60 720,180 1080,120 C1260,90 1380,130 1440,110 L1440,180 L0,180 Z" fill="rgba(42,106,120,0.08)"/>
+  </svg>
+  <div class="hero-label">Family RV Expedition · Summer 2026</div>
+  <h1>The Baltic<br><em>Dispatch</em></h1>
+  <div class="hero-meta">
+    <div class="hero-pill">⚓ <span>Tallinn, 1 July</span></div>
+    <div class="hero-pill">⚔️ <span>Pärnu Medieval Days, 3–5 July</span></div>
+    <div class="hero-pill">🚢 <span>Gdynia — ferry home</span></div>
+    <div class="hero-pill">🗺 <span>Estonia · Latvia · Lithuania · Poland</span></div>
+  </div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div></div>
+</section>
+
+<!-- NAV -->
+<nav class="country-nav" id="main-nav">
+  <a href="#estonia" class="est">🇪🇪 Estonia</a>
+  <a href="#latvia" class="lat">🇱🇻 Latvia</a>
+  <a href="#lithuania" class="lit">🇱🇹 Lithuania</a>
+  <a href="#poland" class="pol">🇵🇱 Poland</a>
+  <a href="#tips">⚙ Tips</a>
+  <div class="nav-progress"><strong id="visit-count">0</strong>&nbsp;of&nbsp;<strong id="visit-total">0</strong> visited</div>
+</nav>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" id="filter-bar">
+  <button class="filter-pill active" data-cat="all">All</button>
+  <button class="filter-pill" data-cat="unusual">⚡ Unusual</button>
+  <button class="filter-pill" data-cat="islands">🏝 Islands</button>
+  <button class="filter-pill" data-cat="history">🏛 History</button>
+  <button class="filter-pill" data-cat="nature">🌲 Nature</button>
+  <button class="filter-pill" data-cat="food">🍽 Food</button>
+  <button class="filter-pill" data-cat="sleep">🛌 Sleep</button>
+  <button class="filter-pill" data-cat="coldwar">❄ Cold War</button>
+  <button class="filter-pill" data-cat="events">🎪 Events</button>
+</div>
+
+<!-- SEARCH -->
+<div class="search-bar">
+  <div class="search-inner">
+    <span class="search-icon">🔍</span>
+    <input type="search" id="search-input" placeholder="Search destinations…" autocomplete="off" autocorrect="off">
+    <button class="search-clear" id="search-clear">✕</button>
+  </div>
+</div>
+
+<!-- VIEW TOGGLE -->
+<div class="view-bar">
+  <button class="view-btn active" id="btn-all-view">All</button>
+  <button class="view-btn" id="btn-wishlist-view">⭐ Wishlist</button>
+  <button class="view-btn" id="btn-visited-view">✓ Visited</button>
+  <span class="view-count" id="view-count-label"></span>
+</div>
+
+<!-- AI BANNER -->
+<div class="ai-banner reveal">
+  <div class="ai-dot"></div>
+  <p><strong>Live AI assistant set up for this trip.</strong> Open <a href="https://claude.ai" target="_blank">claude.ai</a> → Baltic Trip project on your phone to ask anything in real time — "what's unusual near here?", "find us smoked fish tonight". This guide covers the highlights; the AI handles the spontaneous moments.</p>
+</div>
+
+
+<!-- ESTONIA -->
+<section id="estonia" class="chapter est-chapter">
+  <div class="chapter-header">
+    <div class="chapter-eyebrow">Stop 01</div>
+    <div class="chapter-title">Est<em>onia</em></div>
+    <div class="chapter-rule"></div>
+  </div>
+  <div class="chapter-intro">Tallinn · Lahemaa · Haapsalu · Pärnu · The Western Islands — the most permissive wild-camping laws in Europe, and islands most travellers never find.</div>
+  <div class="chapter-empty">No destinations match this filter in Estonia.</div>
+  <div style="height:1.25rem"></div>
+
+  <div class="festival reveal">
+    <div class="festival-header">
+      <div class="festival-icon">⚔️</div>
+      <div>
+        <div class="festival-title">Pärnu Medieval Days 2026</div>
+        <div class="festival-dates">3–5 July · Hanseatic League Heritage Festival</div>
+      </div>
+    </div>
+    <p>One of the most authentic medieval markets in the region. Every vendor must sell handcrafted goods — no mass production. Live blacksmiths, leatherworkers, lute makers, glassblowers demonstrating actual techniques. Music and dance from period ensembles throughout.</p>
+    <ul>
+      <li>Arrive Friday afternoon — best atmosphere builds from the start</li>
+      <li>Buy what you want early — the genuinely good crafts sell out by Sunday</li>
+      <li>Park the RV outside the town centre; centre is often restricted during the festival</li>
+      <li>The town itself is worth exploring: Hanseatic port architecture, good beach</li>
+    </ul>
+  </div>
+
+  <div class="cards" id="cards-estonia">
+
+    <div class="card est-card dest-card reveal" data-id="est-tallinn" data-cats="history" data-country="est" data-title="Tallinn Old Town &amp; Toompea" data-eyebrow="Estonia · History" data-time="Half day to full day" data-cost="Free (most areas)" data-transport="Walk from the ferry terminal — 10 min" data-modal-desc="The best-preserved medieval Old Town in northern Europe — UNESCO World Heritage. Toompea hill (upper town) has been the seat of every power that ruled Estonia: Danes, Germans, Swedes, Russians. The lower town keeps its original 13th–14th century street grid almost completely intact. Highlights: Viru Gate, the Town Hall and its medieval pharmacy (oldest in continuous operation in Europe), Alexander Nevsky Cathedral (built as a statement of Russian authority — still controversial). The Kohtuotsa viewpoint at dusk turns the spires gold. Go early morning before tour groups arrive. Allow time to wander down alleys without a map.">
+      <div class="card-type">🏛 History</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Tallinn Old Town &amp; Toompea</div>
+          <div class="gem-desc">The best-preserved medieval Old Town in northern Europe. Every conqueror who ruled Estonia — Danes, Germans, Swedes, Russians — left their mark on Toompea hill. The lower town keeps its 13th-century street grid intact. The medieval pharmacy on Town Hall Square has been operating continuously since 1422. Kohtuotsa viewpoint at dusk: the spires turn gold.</div>
+          <div class="gem-tags"><span class="tag tag-gold">UNESCO World Heritage</span><span class="tag">walk from ferry</span><span class="tag">medieval pharmacy since 1422</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-tallinn">☆ Save</button><button class="btn-check" data-dest="est-tallinn">○ Visited</button><button class="btn-detail" data-dest="est-tallinn">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-lahemaa" data-cats="nature coldwar" data-country="est" data-title="Lahemaa National Park" data-eyebrow="Estonia · Nature" data-time="Full day" data-cost="Free (park entry)" data-transport="1h east of Tallinn by car on the coastal road" data-modal-desc="Estonia's first national park — one of the largest on the Baltic coast. Four restored manor houses, pristine bogs, coastal cliffs, and the best-preserved traditional fishing villages in Estonia (Altja, Käsmu). The Viru Bog boardwalk takes 45 minutes over a genuine raised bog — completely silent, other-worldly. Käsmu has an unofficial Sea Museum in a local's house — just knock on the door and ask. The Soviet submarine base at Hara Harbour sits at the eastern end of the park. Drive the coastal road from Tallinn to Hara and back through the forest — one of the best half-days on the entire trip.">
+      <div class="card-type">🌲 Nature · ❄ Cold War</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Lahemaa National Park</div>
+          <div class="gem-desc">Estonia's first national park stretches along the north coast. Four restored manor houses, raised bogs, pristine fishing villages. The Viru Bog boardwalk is 45 minutes above total silence. Käsmu village has an unofficial Sea Museum in a local's house — just knock. The Hara Harbour Soviet sub base sits at the park's eastern edge. Drive the coastal road from Tallinn east: one of the best half-days on the trip.</div>
+          <div class="gem-tags"><span class="tag">1h from Tallinn</span><span class="tag">Viru Bog boardwalk</span><span class="tag">manor houses</span><span class="tag">Käsmu village</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-lahemaa">☆ Save</button><button class="btn-check" data-dest="est-lahemaa">○ Visited</button><button class="btn-detail" data-dest="est-lahemaa">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-hara" data-cats="coldwar unusual" data-country="est" data-title="Hara Harbour — Soviet Sub Base" data-eyebrow="Estonia · Cold War · Unusual" data-time="1–2 hours" data-cost="Free (open site)" data-transport="1h east of Tallinn inside Lahemaa NP — follow the coastal road" data-modal-desc="An abandoned Soviet nuclear submarine demagnetisation facility and training base, built in the 1950s and decommissioned after 1991. The concrete pens that once held submarines still stand, rusting into the sea. A long pier stretches into the Baltic — the water is clear enough to see the hulks of what was left behind. Completely unmarked on most maps. Almost no visitors. Go late afternoon when the light turns the whole facility amber. Walk to the end of the pier carefully — it is deteriorating. The silence here is the point.">
+      <div class="card-type">❄ Cold War · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Hara Harbour — Soviet sub base</div>
+          <div class="gem-desc">Abandoned Soviet nuclear submarine demagnetisation facility inside Lahemaa NP. Concrete pens that once held submarines stand rusting into the sea. A long deteriorating pier reaches into the Baltic. Unmarked on most maps, almost no visitors. Go late afternoon — the light turns the whole facility amber. The silence here is the point.</div>
+          <div class="gem-tags"><span class="tag tag-cw">Cold War trail</span><span class="tag">1h from Tallinn</span><span class="tag">Lahemaa NP</span><span class="tag">free entry</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-hara">☆ Save</button><button class="btn-check" data-dest="est-hara">○ Visited</button><button class="btn-detail" data-dest="est-hara">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-haapsalu" data-cats="history unusual" data-country="est" data-title="Haapsalu — mud baths &amp; the White Lady" data-eyebrow="Estonia · History · Unusual" data-time="Half day" data-cost="Bishop's Castle €5 adults" data-transport="1.5h from Tallinn by car (Rte 10 west)" data-modal-desc="A Tsarist-era seaside resort famous for therapeutic mud spa treatments since the 1820s — Tchaikovsky visited, and there is a bench in his honour. The 13th-century Bishop's Castle has a legend: by the light of the August full moon, a woman's face appears illuminated in the cathedral window. The town hosts a White Lady Days festival around this event every August. Even in July, the castle tells the story brilliantly. The town is charming, almost entirely Estonian (very few foreign tourists), and the esplanade along the seafront is lovely.">
+      <div class="card-type">🏛 History · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Haapsalu — mud baths &amp; the White Lady</div>
+          <div class="gem-desc">Tsarist seaside resort famous for mud spa treatments since the 1820s. The 13th-century Bishop's Castle has a legend: in the light of the August full moon, a woman's face appears in the cathedral window. The town tells the story brilliantly even in July. Tchaikovsky visited — there is a bench in his honour. Charming, unhurried, very few foreign tourists.</div>
+          <div class="gem-tags"><span class="tag">1.5h from Tallinn</span><span class="tag">Bishop's Castle</span><span class="tag">mud spa heritage</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-haapsalu">☆ Save</button><button class="btn-check" data-dest="est-haapsalu">○ Visited</button><button class="btn-detail" data-dest="est-haapsalu">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-ruhnu" data-cats="unusual islands nature" data-country="est" data-title="Ruhnu Island — the lost island" data-eyebrow="Estonia · Islands · Unusual" data-time="Full day — overnight strongly recommended" data-cost="Ferry ~€20 return; free to explore on arrival" data-transport="2h ferry from Roomassaare (Saaremaa) — book ahead, July is peak" data-modal-desc="70km offshore, roughly 150 residents. The sands at Limo Beach produce a high-pitched squeak when you walk — a real acoustic phenomenon caused by the grain shape. France's only cast-iron Baltic lighthouse (1884) still operational. Estonia's oldest wooden church (1644) still in use, standing next to a 1912 stone church. The native Ruhnu sheep are found nowhere else on Earth. Local seaweed gin — only on the island. Spend a night: the ferry schedule makes it practical, and you will have the island to yourself after day visitors leave. Watch seals from the eastern shore at dusk.">
+      <div class="card-type">🏝 Islands · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Ruhnu Island — the lost island</div>
+          <div class="gem-desc">70km offshore, ~150 residents. The sands at Limo Beach squeak underfoot — a real acoustic phenomenon. France's only surviving cast-iron Baltic lighthouse (1884) still operational. Estonia's oldest wooden church (1644) still in use. The native Ruhnu sheep exist nowhere else on Earth. Try the local seaweed gin. Watch seals from the eastern shore at dusk.</div>
+          <div class="gem-tags"><span class="tag tag-gold">book ferry ahead — July fills up</span><span class="tag">2h ferry from Saaremaa</span><span class="tag">UNESCO Man &amp; Biosphere</span><span class="tag">seaweed gin</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-ruhnu">☆ Save</button><button class="btn-check" data-dest="est-ruhnu">○ Visited</button><button class="btn-detail" data-dest="est-ruhnu">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-kihnu" data-cats="islands history" data-country="est" data-title="Kihnu Island — living UNESCO heritage" data-eyebrow="Estonia · Islands · History" data-time="Half day to full day" data-cost="Ferry ~€12 return (takes vehicles)" data-transport="30 min ferry from Munalaiu — takes the RV" data-modal-desc="30-minute ferry from Munalaiu on the mainland (the ferry takes vehicles). Women here still wear traditional striped skirts daily — not for tourists, just how they live. Ancient music, dance, and craft traditions are active community practices, not performances. The UNESCO listing is for a living culture, not an artefact. Kihnu is one of the last places in Europe where a traditional culture has survived largely unbroken. The community museum is run by local women. Ask if you can attend an evening gathering — they sometimes invite visitors.">
+      <div class="card-type">🏝 Islands · 🏛 History</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Kihnu Island — living UNESCO heritage</div>
+          <div class="gem-desc">30-minute ferry from the mainland (takes vehicles). Women here still wear traditional striped skirts daily — not for tourists, just how they live. Ancient music, dance, and craft traditions are active community practices. The UNESCO listing is for a living culture, not a museum artefact. One of the last places in Europe where a traditional culture has survived largely unbroken.</div>
+          <div class="gem-tags"><span class="tag">30 min ferry · takes RV</span><span class="tag tag-gold">UNESCO Intangible Heritage</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-kihnu">☆ Save</button><button class="btn-check" data-dest="est-kihnu">○ Visited</button><button class="btn-detail" data-dest="est-kihnu">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-vormsi" data-cats="islands unusual" data-country="est" data-title="Vormsi Island — 330 sun crosses" data-eyebrow="Estonia · Islands · Unusual" data-time="Half day" data-cost="Ferry ~€10 return" data-transport="Ferry from Haapsalu (not for RVs — leave the vehicle)" data-modal-desc="The cemetery holds over 330 hand-carved limestone sun crosses — each made by a local farmer, never a professional craftsman. Every cross is unique. There is nothing like it anywhere else. The island also has fossil outcrops at Saxby point, the Rumpo Peninsula hiking trail through rare coastal lichen and bird habitat, and a 14th-century church. Almost no tourists even in peak July. You will likely have the cemetery completely to yourself.">
+      <div class="card-type">🏝 Islands · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Vormsi Island — 330 sun crosses</div>
+          <div class="gem-desc">The cemetery holds over 330 hand-carved limestone sun crosses — each made by a local farmer, never a craftsman. Every cross is unique. Nothing like it exists elsewhere. Fossil outcrops at Saxby point, the Rumpo Peninsula trail through rare coastal birds, a 14th-century church. Almost no tourists even in July. You will likely have the cemetery to yourself.</div>
+          <div class="gem-tags"><span class="tag">ferry from Haapsalu</span><span class="tag">fossil outcrops</span><span class="tag">no crowds in July</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-vormsi">☆ Save</button><button class="btn-check" data-dest="est-vormsi">○ Visited</button><button class="btn-detail" data-dest="est-vormsi">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-saaremaa" data-cats="islands unusual nature" data-country="est" data-title="Saaremaa — Kaali Meteorite Crater" data-eyebrow="Estonia · Islands · Unusual" data-time="Full day on island" data-cost="Crater €3; ferry ~€18 return" data-transport="Ferry from Virtsu to Kuivastu (Muhu), then causeway to Saaremaa — takes RVs" data-modal-desc="Estonia's largest island. The headline curiosity: Kaali Crater — a meteorite impact lake 110 metres wide and 22 metres deep, formed roughly 4,000 years ago. Ancient Estonians built a stone ring wall around it believing it sacred — the wall is still intact. Kuressaare has the best-preserved medieval castle in the Baltic states, moat still filled with water. The Ohesaare windmill (Estonia's only gable windmill you can sleep inside) is also on Saaremaa. Juniper heathlands and excellent cycling.">
+      <div class="card-type">🏝 Islands · ⚡ Unusual · 🌲 Nature</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Saaremaa — Kaali meteorite crater</div>
+          <div class="gem-desc">Estonia's largest island. Kaali Crater is a meteorite impact lake 110m wide, formed ~4,000 years ago — ancient Estonians built a sacred stone ring wall around it that still stands. Kuressaare has the Baltic's best-preserved medieval castle with a water-filled moat. Also home to Estonia's only gable windmill you can sleep in. Excellent cycling through juniper heathland.</div>
+          <div class="gem-tags"><span class="tag">ferry takes RV</span><span class="tag">Kaali crater €3</span><span class="tag">medieval castle</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="est-saaremaa">☆ Save</button><button class="btn-check" data-dest="est-saaremaa">○ Visited</button><button class="btn-detail" data-dest="est-saaremaa">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-food" data-cats="food" data-country="est" data-title="Estonian Food &amp; Drink" data-eyebrow="Estonia · Food &amp; Drink" data-time="" data-cost="" data-transport="" data-modal-desc="Estonian food highlights: smoked fish from roadside smokers (buy warm, eat outside), must leib dark rye from local bakeries only, elk and wild boar on most restaurant menus. In Tallinn: III Draakon medieval tavern in Town Hall Square — period costumes, elk soup in a clay pot. On Ruhnu: seaweed gin (only on the island). On Kihnu and Muhu: home cafés serve fresh-caught Baltic fish. Ask locally.">
+      <div class="card-type">🍽 Food &amp; Drink</div>
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🐟</span><div class="food-name">Smoked fish</div><div class="food-note">Roadside smokers along the coast. Buy it warm, eat it outside.</div></div>
+        <div class="food-item"><span class="food-emoji">🍞</span><div class="food-name">Must leib</div><div class="food-note">Estonian dark rye — from local bakeries only, not supermarkets.</div></div>
+        <div class="food-item"><span class="food-emoji">🦌</span><div class="food-name">Elk &amp; wild boar</div><div class="food-note">On most restaurant menus. Worth trying at least once.</div></div>
+        <div class="food-item"><span class="food-emoji">🍸</span><div class="food-name">Seaweed gin (Ruhnu)</div><div class="food-note">Only on the island. A real curiosity.</div></div>
+        <div class="food-item"><span class="food-emoji">🏰</span><div class="food-name">III Draakon, Tallinn</div><div class="food-note">Medieval tavern in Town Hall Square — period costumes, elk soup in a clay pot.</div></div>
+        <div class="food-item"><span class="food-emoji">🎣</span><div class="food-name">Island fish cafés</div><div class="food-note">Kihnu &amp; Muhu home cafés serve fresh-caught Baltic fish. Ask locally.</div></div>
+      </div>
+      <div class="dest-actions"><button class="btn-star" data-dest="est-food">☆ Save</button></div>
+    </div>
+
+    <div class="card est-card dest-card reveal" data-id="est-sleep" data-cats="sleep" data-country="est" data-title="Where to sleep in Estonia" data-eyebrow="Estonia · Accommodation" data-time="" data-cost="" data-transport="" data-modal-desc="Unusual accommodation options in Estonia: ÖÖD Mirror House (a tiny house clad entirely in mirrors hidden in pine forest — it disappears into the trees), Üügumetsa Treehouse on Muhu Island (platform with sea views), Ohesaare Windmill on Saaremaa (Estonia's only gable windmill you can sleep in). RMK Free Forest Sites: the Estonian Forestry Board runs dozens of free wild campsites — fireplace, sometimes a toilet, completely legal. Map at loodusegakoos.ee.">
+      <div class="card-type">🛌 Where to Sleep</div>
+      <div class="stay"><div class="stay-icon">🪟</div><div><div class="stay-name">ÖÖD Mirror House, Rannamõisa</div><div class="stay-desc">A house clad entirely in mirrors hidden in dense pine forest — it disappears into the trees. Book at oodhouse.com</div></div></div>
+      <div class="stay"><div class="stay-icon">🌲</div><div><div class="stay-name">Üügumetsa Treehouse, Muhu Island</div><div class="stay-desc">A treehouse platform with sea views. Reach via the mainland causeway.</div></div></div>
+      <div class="stay"><div class="stay-icon">💨</div><div><div class="stay-name">Ohesaare Windmill, Saaremaa</div><div class="stay-desc">Estonia's only gable windmill you can sleep in. Unusual, quiet, memorable.</div></div></div>
+      <div class="stay"><div class="stay-icon">🌿</div><div><div class="stay-name">RMK Free Forest Sites</div><div class="stay-desc">Dozens of free legal wild camp sites across Estonia. Map: loodusegakoos.ee</div></div></div>
+      <div class="dest-actions"><button class="btn-star" data-dest="est-sleep">☆ Save</button></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LATVIA -->
+<section id="latvia" class="chapter lat-chapter">
+  <div class="chapter-header">
+    <div class="chapter-eyebrow">Stop 02</div>
+    <div class="chapter-title">Lat<em>via</em></div>
+    <div class="chapter-rule"></div>
+  </div>
+  <div class="chapter-intro">Cape Kolka · Kuldīga · Ventspils · Liepāja · Jūrmala — a coastline most people drive straight through. They are missing everything.</div>
+  <div class="chapter-empty">No destinations match this filter in Latvia.</div>
+  <div style="height:1.25rem"></div>
+
+  <div class="cards" id="cards-latvia">
+
+    <div class="card lat-card dest-card reveal" data-id="lat-karosta" data-cats="coldwar unusual history" data-country="lat" data-title="Karosta Prison, Liepāja" data-eyebrow="Latvia · Cold War · Unusual" data-time="2–3 hours (tour); overnight available" data-cost="Tour €8–12; overnight 'Behind Bars' experience from €30" data-transport="In northern Liepāja — drive or cycle from city centre (20 min walk)" data-modal-desc="The only Tsarist-era military prison in Europe still open to visitors — and possibly the most unusual place to sleep on the entire route. Never had a successful escape in its entire history. In continuous use from 1905 to 1997: Tsarist Navy dissidents, Soviet POWs, political prisoners, 'enemies of the state.' Cells frozen in time since 1997. Guided tours walk you through solitary confinement blocks, reading the history of specific inmates named on the cell doors. The Cold War section includes KGB interrogation protocols still on the walls. Escape rooms let you try to break out. For the right family: an overnight in an actual prison cell. Book at karostascietums.lv.">
+      <div class="card-type">❄ Cold War · ⚡ Unusual · 🏛 History</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Karosta Prison, Liepāja — sleep in a cell</div>
+          <div class="gem-desc">The only Tsarist military prison in Europe open to visitors. In use from 1905 to 1997 — Tsarist Navy dissidents, Soviet POWs, political prisoners. Cells frozen in time since 1997. Guided tours follow named inmates through solitary confinement blocks. KGB interrogation protocols still on the walls. Escape rooms. For the right family: overnight in an actual prison cell. Never had a successful escape in its entire history.</div>
+          <div class="gem-tags"><span class="tag tag-cw">Cold War trail</span><span class="tag tag-gold">overnight stays available</span><span class="tag">guided tours</span><span class="tag">escape rooms</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lat-karosta">☆ Save</button><button class="btn-check" data-dest="lat-karosta">○ Visited</button><button class="btn-detail" data-dest="lat-karosta">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lat-card dest-card reveal" data-id="lat-ligatne" data-cats="coldwar unusual history" data-country="lat" data-title="Līgatne Secret Soviet Bunker" data-eyebrow="Latvia · Cold War · Unusual" data-time="2 hours (guided tour only)" data-cost="€12–15, guided tours must be booked" data-transport="90km from Riga, near Cēsis — 1.5h drive from Liepāja" data-modal-desc="A classified Soviet government bunker hidden under a rehabilitation sanatorium, declassified only in 2003. In the event of nuclear war, the entire Latvian Soviet leadership — First Secretary, Cabinet of Ministers, KGB chief — would have been evacuated here within hours. The bunker has 2,000 square metres of living and command space, 9 metres underground, built to survive a direct blast. Everything is preserved exactly as it was abandoned: operation rooms, the leaders' private quarters (with their Soviet-issue suits still in the wardrobes), the communication centre, emergency food stores. The tour guide plays recordings of what life in here would have been like during a nuclear exchange. One of the most extraordinary Cold War sites in the Baltic states.">
+      <div class="card-type">❄ Cold War · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Līgatne Secret Soviet Bunker</div>
+          <div class="gem-desc">A classified nuclear war bunker hidden under a rehabilitation sanatorium — the entire Latvian Soviet leadership would have been evacuated here. Declassified only in 2003. 2,000 sq metres underground, preserved exactly as abandoned: operation rooms, leaders' private quarters (their suits still in the wardrobes), the communication centre. Tour guides play recordings of what life would have sounded like during a nuclear exchange.</div>
+          <div class="gem-tags"><span class="tag tag-cw">Cold War trail</span><span class="tag">guided tour only · book ahead</span><span class="tag">90km from Riga</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lat-ligatne">☆ Save</button><button class="btn-check" data-dest="lat-ligatne">○ Visited</button><button class="btn-detail" data-dest="lat-ligatne">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lat-card dest-card reveal" data-id="lat-kolka" data-cats="nature unusual" data-country="lat" data-title="Cape Kolka — two seas collide" data-eyebrow="Latvia · Nature · Unusual" data-time="Half day" data-cost="Free" data-transport="2.5h from Riga north along the Courland coast (Rte P131)" data-modal-desc="The northernmost tip of the Courland Peninsula, where the open Baltic Sea and the Gulf of Riga collide. You can stand at the exact point and watch it: the water colours are different on each side, the wave patterns clash, the wind is chaotic. The collision point moves slightly depending on tide and wind. This is the ancestral homeland of the Livonian people — an ancient Finno-Ugric coastal culture almost entirely extinct, distantly related to Estonians and Finns. A single lighthouse from 1884 guides ships through historically treacherous waters. The surrounding Slītere National Park is one of the best migration bird corridors in Europe in autumn — in July, it is simply remote and beautiful.">
+      <div class="card-type">🌲 Nature · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Cape Kolka — two seas collide</div>
+          <div class="gem-desc">The northernmost tip of the Courland Peninsula, where the open Baltic and the Gulf of Riga visibly collide. Stand at the point and watch them — different water colours, clashing wave patterns, chaotic wind. Homeland of the nearly-extinct Livonian people. A lighthouse from 1884 still guides ships. The surrounding Slītere National Park is windswept and remote; almost nobody comes.</div>
+          <div class="gem-tags"><span class="tag">Slītere National Park</span><span class="tag">migration bird corridor</span><span class="tag">Livonian homeland</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lat-kolka">☆ Save</button><button class="btn-check" data-dest="lat-kolka">○ Visited</button><button class="btn-detail" data-dest="lat-kolka">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lat-card dest-card reveal" data-id="lat-kuldiga" data-cats="nature unusual history" data-country="lat" data-title="Kuldīga — Europe's widest waterfall" data-eyebrow="Latvia · Nature · Unusual" data-time="2–3 hours" data-cost="Free" data-transport="165km from Riga, 100km from Liepāja — on the direct route south" data-modal-desc="249 metres wide but only 2 metres tall. It feels completely absurd. The Ventas Rumba waterfall looks more like a weir than a waterfall until you are standing next to it and feel the scale. In spring, Atlantic salmon leap it — locals have fished here for centuries. During summer floods, people swim across the lip. Stand on the old 17th-century brick bridge 200 metres downstream — it is the best viewpoint and one of the most photographed bridges in Latvia. The town of Kuldīga alongside it has beautiful Hanseatic architecture almost entirely unknown to non-Baltic tourists. The old town is a UNESCO World Heritage candidate. Give it 2 hours minimum.">
+      <div class="card-type">🌲 Nature · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Kuldīga — Europe's widest waterfall</div>
+          <div class="gem-desc">249 metres wide, but only 2 metres tall — it feels completely absurd. In spring, salmon jump it; in summer floods, people swim across the lip. Stand on the 17th-century brick bridge downstream for the perspective shot. The town of Kuldīga alongside has beautiful Hanseatic architecture almost entirely unknown to non-Baltic tourists. A UNESCO World Heritage candidate.</div>
+          <div class="gem-tags"><span class="tag">Kuldīga town</span><span class="tag">brick bridge viewpoint</span><span class="tag">on the route south</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lat-kuldiga">☆ Save</button><button class="btn-check" data-dest="lat-kuldiga">○ Visited</button><button class="btn-detail" data-dest="lat-kuldiga">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lat-card dest-card reveal" data-id="lat-jurmala" data-cats="nature history" data-country="lat" data-title="Jūrmala — 26km of beach &amp; Art Nouveau villas" data-eyebrow="Latvia · Nature · History" data-time="Half day to full day" data-cost="Free beach; parking in season ~€3" data-transport="25km west of Riga by car or train (20 min from Riga Central)" data-modal-desc="26 kilometres of white sand beach along the Gulf of Riga. In Soviet times, Jūrmala was a restricted resort — you needed a special pass to visit, reserved for party elite and loyal workers. The result: hundreds of Art Nouveau wooden villas from the early 20th century that survived because the area was locked away. The Dzintari Concert Hall still hosts the New Wave music competition every July. Pine forests run directly behind the beach dunes — camp in the forest, walk to the sea. The water is calmer and warmer than the open Baltic. Best beach on the entire route.">
+      <div class="card-type">🌲 Nature · 🏛 History</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Jūrmala — 26km of beach &amp; Art Nouveau villas</div>
+          <div class="gem-desc">26km of white sand on the Gulf of Riga, 25km from Riga. In Soviet times, a restricted resort — you needed a special pass to visit. The result: hundreds of early 20th-century Art Nouveau wooden villas that survived untouched. Pine forest runs behind the dunes. Calmer and warmer water than the open Baltic. Dzintari Concert Hall hosts the New Wave competition every July. Best beach on the entire route.</div>
+          <div class="gem-tags"><span class="tag">25km from Riga</span><span class="tag">Art Nouveau villas</span><span class="tag">Soviet restricted zone history</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lat-jurmala">☆ Save</button><button class="btn-check" data-dest="lat-jurmala">○ Visited</button><button class="btn-detail" data-dest="lat-jurmala">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lat-card dest-card reveal" data-id="lat-riga" data-cats="history unusual food" data-country="lat" data-title="Riga Central Market — Zeppelin hangars" data-eyebrow="Latvia · History · Food" data-time="1–2 hours" data-cost="Free entry; budget €10–20 for shopping" data-transport="Riga city centre, adjacent to the main train station — easy RV parking nearby" data-modal-desc="Five former WWI German Zeppelin airship hangars, each over 200 metres long, converted in 1930 into one of Europe's largest covered markets. Smoked fish, pickled everything, local cheeses, Latvian black bread, dried mushrooms, amber, and a great deal of Soviet-era nostalgia in the adjoining stalls. Each hangar has its own speciality (meat, dairy, fish, vegetables, textiles). The fish pavilion is the highlight — the variety of smoked and salted Baltic fish on display is extraordinary. Even if you don't stop in Riga for sightseeing, this is worth an hour. Buy provisions for the next two days.">
+      <div class="card-type">🏛 History · 🍽 Food</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Riga Central Market — Zeppelin hangars</div>
+          <div class="gem-desc">Five former WWI Zeppelin airship hangars converted into Europe's largest covered market. Smoked fish, pickled everything, Latvian black bread, dried mushrooms, amber, and a great deal of Soviet-era nostalgia. The fish pavilion alone is worth the detour — the variety of Baltic smoked and salted fish is extraordinary. Buy provisions for the next two days.</div>
+          <div class="gem-tags"><span class="tag">near Riga train station</span><span class="tag">WWI Zeppelin hangars</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lat-riga">☆ Save</button><button class="btn-check" data-dest="lat-riga">○ Visited</button><button class="btn-detail" data-dest="lat-riga">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lat-card dest-card reveal" data-id="lat-food" data-cats="food" data-country="lat" data-title="Latvian Food &amp; Drink" data-eyebrow="Latvia · Food &amp; Drink" data-time="" data-cost="" data-transport="" data-modal-desc="Latvian food highlights: aukstā zupa (cold pink beetroot soup with dill, sour cream and egg — order on a warm afternoon), pirāgi (small pastry rolls stuffed with smoked bacon and onion — buy fresh from any bakery), black peas and bacon with cold buttermilk (deeply savoury, uniquely Latvian), pickled herring with cranberries and cottage cheese (find at the Riga market), Latvian Balsam (jet-black herbal liqueur, 45% alcohol, makes a good digestif).">
+      <div class="card-type">🍽 Food &amp; Drink</div>
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🥣</span><div class="food-name">Aukstā zupa</div><div class="food-note">Cold pink beetroot soup with dill, sour cream and egg. Order it warm afternoon.</div></div>
+        <div class="food-item"><span class="food-emoji">🥐</span><div class="food-name">Pirāgi</div><div class="food-note">Pastry rolls stuffed with smoked bacon and onion. Buy fresh from any bakery.</div></div>
+        <div class="food-item"><span class="food-emoji">🫘</span><div class="food-name">Black peas &amp; bacon</div><div class="food-note">Dark grey peas, smoked bacon, cold buttermilk. Deeply savoury, uniquely Latvian.</div></div>
+        <div class="food-item"><span class="food-emoji">🐟</span><div class="food-name">Pickled herring</div><div class="food-note">With cranberries, cottage cheese and boiled potato. Find it at the Riga market.</div></div>
+        <div class="food-item"><span class="food-emoji">🖤</span><div class="food-name">Latvian Balsam</div><div class="food-note">Jet-black herbal liqueur, 45% alcohol. Makes a good digestif after a heavy meal.</div></div>
+        <div class="food-item"><span class="food-emoji">🥖</span><div class="food-name">Rupjmaize</div><div class="food-note">Latvian dark rye bread — denser and slightly sweeter than Estonian. Eat with butter.</div></div>
+      </div>
+      <div class="dest-actions"><button class="btn-star" data-dest="lat-food">☆ Save</button></div>
+    </div>
+
+    <div class="card lat-card dest-card reveal" data-id="lat-sleep" data-cats="sleep" data-country="lat" data-title="Where to sleep in Latvia" data-eyebrow="Latvia · Accommodation" data-time="" data-cost="" data-transport="" data-modal-desc="Unusual Latvia accommodation: Karosta Prison cell (karostascietums.lv — the Behind Bars overnight experience), tree houses near Cēsis (Čiekurs and Baltais Čiekurs, 5-6m up in pines on a lake shore), underground houses in Tērvete Nature Park (six houses built underground — no internet, listed as a feature), PELDMĀJA float homes (six floating cottages with open river terraces), barrel houses at Melnsils (large wooden barrels on the seashore you can actually sleep in).">
+      <div class="card-type">🛌 Where to Sleep</div>
+      <div class="stay"><div class="stay-icon">🔒</div><div><div class="stay-name">Karosta Prison Cell, Liepāja</div><div class="stay-desc">An actual Soviet-era prison cell. Cold, dark, genuine. karostascietums.lv — book the "Behind Bars" overnight.</div></div></div>
+      <div class="stay"><div class="stay-icon">🌳</div><div><div class="stay-name">Tree Houses near Cēsis</div><div class="stay-desc">Čiekurs &amp; Baltais Čiekurs — 5–6m up in pines on Lake Ņinieris shore, 90km from Riga.</div></div></div>
+      <div class="stay"><div class="stay-icon">🏚</div><div><div class="stay-name">Underground Houses, Tērvete</div><div class="stay-desc">Six houses built underground. No internet — they list this as a feature. Genuinely unusual.</div></div></div>
+      <div class="stay"><div class="stay-icon">🛥</div><div><div class="stay-name">PELDMĀJA Float Homes</div><div class="stay-desc">Six floating cottages with open river terraces. Up to 4 guests per cottage.</div></div></div>
+      <div class="stay"><div class="stay-icon">🛢</div><div><div class="stay-name">Barrel Houses, Melnsils</div><div class="stay-desc">Large wooden barrels on the seashore you can sleep inside. Absurd in the best way.</div></div></div>
+      <div class="dest-actions"><button class="btn-star" data-dest="lat-sleep">☆ Save</button></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LITHUANIA -->
+<section id="lithuania" class="chapter lit-chapter">
+  <div class="chapter-header">
+    <div class="chapter-eyebrow">Stop 03</div>
+    <div class="chapter-title">Lithu<em>ania</em></div>
+    <div class="chapter-rule"></div>
+  </div>
+  <div class="chapter-intro">Palanga · Klaipėda · Curonian Spit · Hill of Crosses · Žemaitija — buried villages, 100,000 crosses, and Cold War missile silos you can stand inside.</div>
+  <div class="chapter-empty">No destinations match this filter in Lithuania.</div>
+  <div style="height:1.25rem"></div>
+
+  <div class="cards" id="cards-lithuania">
+
+    <div class="card lit-card dest-card reveal" data-id="lit-crosses" data-cats="history unusual" data-country="lit" data-title="Hill of Crosses, near Šiauliai" data-eyebrow="Lithuania · History · Unusual" data-time="1 hour" data-cost="Free" data-transport="12km north of Šiauliai · 215km from Klaipėda — sign off Rte A12" data-modal-desc="A small hill covered in over 100,000 crosses, rosaries, crucifixes and religious icons left by Lithuanians since the 1830s. The Soviet authorities bulldozed it three times — in 1961, 1975, and 1985. Each time, locals returned overnight and rebuilt it. This became one of the most powerful symbols of peaceful resistance to Soviet occupation, and the hill outlasted the USSR. In 1993, Pope John Paul II visited. The hill itself is not large. What it represents is overwhelming. There is nothing else in Europe quite like standing here. Go early morning to have it quieter — it is busiest midday.">
+      <div class="card-type">🏛 History · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Hill of Crosses, near Šiauliai</div>
+          <div class="gem-desc">Over 100,000 crosses, rosaries and icons left by Lithuanians since the 1830s. The Soviets bulldozed it three times — in 1961, 1975, and 1985. Each time, locals returned overnight and rebuilt it. This became one of the most powerful symbols of peaceful resistance to Soviet rule. Pope John Paul II visited in 1993. The hill itself is small. What it represents is overwhelming.</div>
+          <div class="gem-tags"><span class="tag tag-gold">12km north of Šiauliai · free</span><span class="tag">must stop</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lit-crosses">☆ Save</button><button class="btn-check" data-dest="lit-crosses">○ Visited</button><button class="btn-detail" data-dest="lit-crosses">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lit-card dest-card reveal" data-id="lit-neringa" data-cats="nature unusual history" data-country="lit" data-title="Curonian Spit (Neringa) — UNESCO" data-eyebrow="Lithuania · Nature · Unusual" data-time="Full day minimum; overnight recommended" data-cost="Vehicle entry fee ~€4–5; ferry from Klaipėda ~€12 return" data-transport="Ferry from Klaipėda Old Ferry Port — takes vehicles, runs frequently" data-modal-desc="A 100km sandbar separating the Baltic Sea from the Curonian Lagoon. The dunes reach 67 metres high and are still slowly moving. The spit has buried fourteen villages since the 17th century — in Nagliai Nature Reserve you can walk on a boardwalk above trees still sticking out of the sand. Nida is the best village: traditional fishermen's houses painted amber, blue and red; Thomas Mann's summer cottage (now a museum); the Parnidis Dune with a stone sundial at the top — climb it at sunset. Juodkrantė: a forest trail with 80+ carved wooden witches and devils, and Europe's largest cormorant and heron colony. Smoked fish everywhere, especially smoked lamprey. Unique microclimate: hotter and drier than the mainland.">
+      <div class="card-type">🌲 Nature · ⚡ Unusual · 🏛 History</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Curonian Spit (Neringa) — UNESCO</div>
+          <div class="gem-desc">A 100km sandbar with 67-metre moving dunes. Fourteen villages buried since the 17th century — at Nagliai you walk above trees still sticking out of the sand. Nida village: Thomas Mann's summer cottage, fishermen's houses painted in amber and red, the Parnidis Dune sundial at the top. Juodkrantė: 80+ carved woodland witches, Europe's largest cormorant colony. Smoked lamprey everywhere.</div>
+          <div class="gem-tags"><span class="tag">ferry from Klaipėda · takes vehicles</span><span class="tag tag-gold">UNESCO World Heritage</span><span class="tag">buried villages</span><span class="tag">moving dunes</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lit-neringa">☆ Save</button><button class="btn-check" data-dest="lit-neringa">○ Visited</button><button class="btn-detail" data-dest="lit-neringa">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lit-card dest-card reveal" data-id="lit-missile" data-cats="coldwar unusual" data-country="lit" data-title="Cold War Missile Base, Žemaitija NP" data-eyebrow="Lithuania · Cold War · Unusual" data-time="2–3 hours (guided or self-guided)" data-cost="€4–7 entry; guided tour €8" data-transport="In Žemaitija National Park — 170km from Klaipėda; 60km from Šiauliai" data-modal-desc="A fully intact Soviet nuclear missile base operational from 1962 to 1978 — the Cuban Missile Crisis era — now open to the public. Four R-12 medium-range ballistic missiles were housed here, each capable of striking Western European capitals. Go underground into the actual launch silos. The operational orders are still pinned to the walls. The bunker where commanders would have launched the missiles is intact, with the original launch keys and procedures displayed. One of the most extraordinary Cold War sites in Europe — and almost nobody outside Lithuania knows it exists. The site is run by a small local team who are passionate about its history. Guided tours are strongly recommended.">
+      <div class="card-type">❄ Cold War · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Cold War Missile Base, Žemaitija NP</div>
+          <div class="gem-desc">Fully intact Soviet nuclear missile base, operational 1962–1978 (Cuban Missile Crisis era). Four R-12 ballistic missiles housed here could have struck Western European capitals. Go underground into the actual launch silos — operational orders still on the walls, launch keys still in place. One of the most extraordinary Cold War sites in Europe, almost unknown outside Lithuania.</div>
+          <div class="gem-tags"><span class="tag tag-cw">Cold War trail</span><span class="tag">Žemaitija NP</span><span class="tag">guided tours available</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lit-missile">☆ Save</button><button class="btn-check" data-dest="lit-missile">○ Visited</button><button class="btn-detail" data-dest="lit-missile">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lit-card dest-card reveal" data-id="lit-klaipeda" data-cats="history unusual" data-country="lit" data-title="Klaipėda — the German city that wasn't" data-eyebrow="Lithuania · History · Unusual" data-time="Half day" data-cost="Free to explore" data-transport="Lithuania's main port city — the start of the Curonian Spit ferry" data-modal-desc="Klaipėda was the German city of Memel until 1923, then briefly re-annexed by Nazi Germany in March 1939 — Hitler gave a speech from the balcony of the Theatre building the day after taking it, one of the last speeches before the invasion of Poland. The half-timbered German Old Town architecture survived WWII intact. Walk the old town quarter, find the Theatre square where Hitler stood, and then take the ferry to the Curonian Spit. The contrast between the German architecture and the Soviet-era suburbs is striking. Good fish restaurants on the waterfront.">
+      <div class="card-type">🏛 History · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Klaipėda — the German city that wasn't</div>
+          <div class="gem-desc">Until 1923, this was the German city of Memel. In March 1939, Hitler gave a speech from the Theatre balcony the day after re-annexing it — one of his last before the invasion of Poland. The half-timbered German Old Town architecture survived WWII intact. Find the Theatre square, walk the old town, then take the Curonian Spit ferry. The contrast between German quarter and Soviet suburbs is stark.</div>
+          <div class="gem-tags"><span class="tag">Curonian Spit ferry terminal</span><span class="tag">German half-timbered Old Town</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lit-klaipeda">☆ Save</button><button class="btn-check" data-dest="lit-klaipeda">○ Visited</button><button class="btn-detail" data-dest="lit-klaipeda">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lit-card dest-card reveal" data-id="lit-trakai" data-cats="history unusual" data-country="lit" data-title="Trakai Island Castle — and the Karaites" data-eyebrow="Lithuania · History · Unusual" data-time="Half day" data-cost="Castle entry €8 adults" data-transport="28km west of Vilnius — 3h from Klaipėda; worthwhile detour inland" data-modal-desc="A medieval castle built on an island in the middle of a lake, reached by wooden bridges. Spectacular and genuinely picturesque. But the real curiosity of Trakai is the Karaite community — a tiny Turkic Jewish sect brought here by Grand Duke Vytautas in the 14th century as his personal bodyguards. There are fewer than 300 Karaites left in Lithuania today. They have a unique language, unique food (kibinai — hand-crimped meat pastries, eaten in every Trakai restaurant), a small museum, and a 17th-century kenesa (prayer house) still in use. This community exists nowhere else in Europe in this form.">
+      <div class="card-type">🏛 History · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Trakai Island Castle — and the Karaites</div>
+          <div class="gem-desc">A medieval castle on an island in a lake, connected by wooden bridges. Spectacular. The real curiosity: the Karaite community — a Turkic Jewish sect brought here by a Grand Duke in the 14th century as bodyguards. Fewer than 300 remain. Their language, food (kibinai pastries), and 17th-century kenesa prayer house survive nowhere else in Europe in this form.</div>
+          <div class="gem-tags"><span class="tag">28km from Vilnius</span><span class="tag">Karaite community</span><span class="tag">kibinai pastries</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lit-trakai">☆ Save</button><button class="btn-check" data-dest="lit-trakai">○ Visited</button><button class="btn-detail" data-dest="lit-trakai">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lit-card dest-card reveal" data-id="lit-amber" data-cats="nature history unusual" data-country="lit" data-title="Palanga Amber Museum" data-eyebrow="Lithuania · History · Nature" data-time="1–2 hours" data-cost="€4 adults" data-transport="In Palanga town — 30km north of Klaipėda" data-modal-desc="Pieces of amber displayed like precious jewels — including many with prehistoric insects, spiders, and plant matter preserved inside, some 40–50 million years old. Pieces with perfectly preserved prehistoric ants, spiders mid-web, even a feather. The context cards explain what each creature represents about the Eocene period. Housed in a 19th-century Romantic-era mansion (the Tyszkiewicz manor) surrounded by a large botanical garden designed by the same landscape architect who did the parks in Warsaw. Better than it sounds, and the garden is worth walking even if you skip the museum.">
+      <div class="card-type">🏛 History · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Palanga Amber Museum</div>
+          <div class="gem-desc">Amber displayed like precious jewels — including pieces with perfectly preserved prehistoric insects, spiders mid-web, even a feather — some 40–50 million years old. Housed in a 19th-century Romantic manor with a large botanical garden. The botanical garden alone is worth the walk. Better than it sounds; children tend to love the insect pieces.</div>
+          <div class="gem-tags"><span class="tag">Palanga town</span><span class="tag">30km north of Klaipėda</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="lit-amber">☆ Save</button><button class="btn-check" data-dest="lit-amber">○ Visited</button><button class="btn-detail" data-dest="lit-amber">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card lit-card dest-card reveal" data-id="lit-food" data-cats="food" data-country="lit" data-title="Lithuanian Food &amp; Drink" data-eyebrow="Lithuania · Food &amp; Drink" data-time="" data-cost="" data-transport="" data-modal-desc="Lithuanian food highlights: smoked fish and lamprey from the Curonian Spit (centuries-old tradition, eat warm by the lagoon), kibinai (Karaite hand-crimped pastries from Trakai — unique to this community), cepelinai (giant potato dumplings shaped like dirigibles, stuffed with minced meat — absurdly filling), Lithuanian farmhouse ale (kaimiškas alus — completely different from commercial beer, available in rural areas), šaltibarščiai (cold beetroot soup — similar to Latvian, but pinker and with more cucumber).">
+      <div class="card-type">🍽 Food &amp; Drink</div>
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🐟</span><div class="food-name">Smoked fish &amp; lamprey</div><div class="food-note">Centuries-old Curonian Spit tradition. Eat warm, outside, by the lagoon.</div></div>
+        <div class="food-item"><span class="food-emoji">🥟</span><div class="food-name">Kibinai</div><div class="food-note">Karaite hand-crimped pastries from Trakai. Unique to this community — found nowhere else.</div></div>
+        <div class="food-item"><span class="food-emoji">🥔</span><div class="food-name">Cepelinai</div><div class="food-note">Giant potato dumplings shaped like dirigibles, stuffed with minced meat. Absurdly filling.</div></div>
+        <div class="food-item"><span class="food-emoji">🍺</span><div class="food-name">Kaimiškas alus</div><div class="food-note">Lithuanian farmhouse ale from rural breweries. Completely different from commercial beer.</div></div>
+        <div class="food-item"><span class="food-emoji">🍵</span><div class="food-name">Šaltibarščiai</div><div class="food-note">Cold pink beetroot soup — pinker than Latvian, with more cucumber and kefir.</div></div>
+        <div class="food-item"><span class="food-emoji">🧀</span><div class="food-name">Džiugas cheese</div><div class="food-note">Lithuanian aged hard cheese — the Baltic answer to Parmesan. Buy a wedge at any market.</div></div>
+      </div>
+      <div class="dest-actions"><button class="btn-star" data-dest="lit-food">☆ Save</button></div>
+    </div>
+
+    <div class="card lit-card dest-card reveal" data-id="lit-sleep" data-cats="sleep" data-country="lit" data-title="Where to sleep in Lithuania" data-eyebrow="Lithuania · Accommodation" data-time="" data-cost="" data-transport="" data-modal-desc="Lithuania accommodation options: countryside tourism farms (countryside.lt has 376+ listings — look for handwritten Nakvynė signs on country roads, often includes home-cooked meal with the family), pine forest guesthouses on the Curonian Spit (book a few days ahead in July — peak season fills up fast), farmhouse B&Bs around Žemaitija National Park (working farms with extraordinary food), treehouse at Anykščiai (a 30m-high treetop walkway with an adjacent overnight platform in the pine canopy).">
+      <div class="card-type">🛌 Where to Sleep</div>
+      <div class="stay"><div class="stay-icon">🌾</div><div><div class="stay-name">Countryside tourism farms (countryside.lt)</div><div class="stay-desc">376+ farms across Lithuania. Look for "Nakvynė" signs. Often includes home-cooked meal with the family.</div></div></div>
+      <div class="stay"><div class="stay-icon">🌲</div><div><div class="stay-name">Pine forest guesthouses, Neringa</div><div class="stay-desc">Small guesthouses between pines on the Curonian Spit. July is peak season — book a few days ahead.</div></div></div>
+      <div class="stay"><div class="stay-icon">🏡</div><div><div class="stay-name">Farmhouse B&amp;Bs, Žemaitija</div><div class="stay-desc">Around the missile base. Working farm stays — basic, authentic, food extraordinary.</div></div></div>
+      <div class="stay"><div class="stay-icon">🌳</div><div><div class="stay-name">Anykščiai Treetop Walkway &amp; Platform</div><div class="stay-desc">30m-high treetop walkway in the pine canopy. Overnight platform available — book ahead.</div></div></div>
+      <div class="dest-actions"><button class="btn-star" data-dest="lit-sleep">☆ Save</button></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- POLAND PLACEHOLDER -->
+<!-- POLAND -->
+<section id="poland" class="chapter pol-chapter">
+  <div class="chapter-header">
+    <div class="chapter-eyebrow">Stop 04</div>
+    <div class="chapter-title">Pol<em>and</em></div>
+    <div class="chapter-rule"></div>
+  </div>
+  <div class="chapter-intro">Łeba · Słowiński NP · Hel Peninsula · Gdańsk · Gdynia — sand dunes that eat forests, a sandbar 100 metres wide, and a shipyard that ended communism.</div>
+  <div class="chapter-empty">No destinations match this filter in Poland.</div>
+  <div style="height:1.25rem"></div>
+  <div class="cards" id="cards-poland">
+
+    <div class="card pol-card dest-card reveal" data-id="pol-slowinski" data-cats="nature unusual" data-country="pol" data-title="Słowiński NP — dunes that eat forests" data-eyebrow="Poland · Nature · Unusual" data-time="2–4 hours" data-cost="Entry 6 PLN; bike rental in Łeba ~40 PLN/day" data-transport="Bike or walk 8km from Łeba town — bike rental on the main street" data-modal-desc="The only large-scale mobile dune system in Europe. Advancing 3–12 metres per year, the dunes have buried an entire forest over 300 years. Dead trees still protrude like pale fingers. The dunes reach 42 metres — sandboarding possible (boards rentable in Łeba). Walk to the lake shore behind the dunes for the full panorama. The landscape changes measurably every year. Come morning to beat July afternoon crowds.">
+      <div class="card-type">🌲 Nature · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Słowiński NP — dunes that eat forests</div>
+          <div class="gem-desc">The only large-scale mobile dune system in Europe. Advancing 3–12m per year, the dunes have buried an entire forest — dead trees still protrude from the sand like fingers. Dunes reach 42m. Sandboarding on the bigger slopes. Bike or walk the 8km from Łeba. The landscape is measurably different every year.</div>
+          <div class="gem-tags"><span class="tag tag-gold">bike from Łeba · 8km</span><span class="tag">entry 6 PLN</span><span class="tag">sandboarding</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="pol-slowinski">☆ Save</button><button class="btn-check" data-dest="pol-slowinski">○ Visited</button><button class="btn-detail" data-dest="pol-slowinski">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card pol-card dest-card reveal" data-id="pol-hel" data-cats="nature unusual" data-country="pol" data-title="Hel Peninsula — the 100-metre sandbar" data-eyebrow="Poland · Nature · Unusual" data-time="Half day to full day" data-cost="Free; seal sanctuary small entry" data-transport="Drive or cycle to the tip — 35km from Hel town; summer ferry from Gdańsk" data-modal-desc="A 35km sandbar at its narrowest only 100 metres wide — open sea on both sides simultaneously. Drive or cycle to the very tip. North side: proper Baltic waves. South side: flat as glass. At the tip: Baltic grey seal sanctuary; red octagonal lighthouse from 1838 (still operational); the Harbour Porpoise Conservation Station (one of the only places in Europe actively working to save the Baltic harbour porpoise from extinction); a village inhabited continuously since Goths arrived in the 1st century AD.">
+      <div class="card-type">🌲 Nature · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Hel Peninsula — the 100-metre sandbar</div>
+          <div class="gem-desc">A 35km sandbar at its narrowest only 100m wide — open sea crashing on both sides. Drive or cycle to the tip: Baltic grey seal sanctuary, an 1838 red lighthouse, a porpoise conservation station (saving the near-extinct Baltic harbour porpoise), and a village inhabited since the 1st century AD. North side: waves. South side: flat as glass.</div>
+          <div class="gem-tags"><span class="tag">seal sanctuary at tip</span><span class="tag">porpoise conservation</span><span class="tag">red lighthouse 1838</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="pol-hel">☆ Save</button><button class="btn-check" data-dest="pol-hel">○ Visited</button><button class="btn-detail" data-dest="pol-hel">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card pol-card dest-card reveal" data-id="pol-westerplatte" data-cats="history" data-country="pol" data-title="Westerplatte — where WWII began" data-eyebrow="Poland · History" data-time="1–2 hours" data-cost="Free; small museum fee" data-transport="7km north of Gdańsk Old Town — bus 106 or short drive" data-modal-desc="At 4:45am on September 1, 1939, the German battleship Schleswig-Holstein opened fire here — the first shots of the Second World War. 182 Polish soldiers held out for seven days against 3,500 Germans before surrendering with ammunition exhausted. The German commander, impressed by the defence, allowed the Polish Major to keep his sword. The ruined barracks and garrison positions are preserved as a memorial park. Standing among the shell-damaged walls knowing what happened here is one of the most affecting stops on the entire route.">
+      <div class="card-type">🏛 History</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">Westerplatte — where WWII began</div>
+          <div class="gem-desc">At 4:45am on 1 September 1939, the first shots of the Second World War were fired here. 182 Polish soldiers held out for seven days against 3,500 Germans. The German commander allowed the Polish Major to keep his sword. Ruined barracks and defensive positions preserved as a memorial park. One of the most affecting stops on the route.</div>
+          <div class="gem-tags"><span class="tag">7km from Gdańsk</span><span class="tag">first shots of WWII</span><span class="tag">free entry</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="pol-westerplatte">☆ Save</button><button class="btn-check" data-dest="pol-westerplatte">○ Visited</button><button class="btn-detail" data-dest="pol-westerplatte">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card pol-card dest-card reveal" data-id="pol-solidarity" data-cats="history" data-country="pol" data-title="European Solidarity Centre, Gdańsk" data-eyebrow="Poland · History" data-time="2–3 hours" data-cost="€12 adults" data-transport="At the Lenin Shipyard gates — tram or bus from Old Town" data-modal-desc="Built at the gates of the original Lenin Shipyard where Solidarity began in August 1980 — the movement that brought down communism across Eastern Europe. One of the best-designed museums in Europe: Wałęsa signing pen, strike objects, ZOMO riot gear, 21 demands on the original gates. Walk the shipyard grounds after. Allow 2 hours minimum.">
+      <div class="card-type">🏛 History</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">European Solidarity Centre, Gdańsk</div>
+          <div class="gem-desc">At the gates of the Lenin Shipyard where Solidarity began in 1980 — the movement that brought down communism across Eastern Europe. One of the best-designed museums in Europe: Wałęsa's signing pen, original strike objects, ZOMO riot gear, the 21 demands still mounted on the original gates.</div>
+          <div class="gem-tags"><span class="tag">ecs.gda.pl</span><span class="tag">original shipyard gates</span><span class="tag">allow 2h minimum</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="pol-solidarity">☆ Save</button><button class="btn-check" data-dest="pol-solidarity">○ Visited</button><button class="btn-detail" data-dest="pol-solidarity">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card pol-card dest-card reveal" data-id="pol-warships" data-cats="history unusual" data-country="pol" data-title="ORP Błyskawica &amp; Dar Pomorza, Gdynia" data-eyebrow="Poland · History · Unusual" data-time="1–2 hours" data-cost="€8 combined ticket" data-transport="Gdynia harbour — 15 min walk from ferry terminal" data-modal-desc="Two historic ships moored side by side. ORP Błyskawica: a WWII Polish destroyer (Norway, Dunkirk, Tobruk) — walk every compartment bow to stern. Dar Pomorza: 1909 three-masted barque used for naval officer training until 1981. Good final stop before the ferry home.">
+      <div class="card-type">🏛 History · ⚡ Unusual</div>
+      <div style="display:flex;align-items:flex-start;gap:.75rem">
+        <div class="gem-rating">⭐⭐</div>
+        <div class="gem-body">
+          <div class="gem-name">ORP Błyskawica &amp; Dar Pomorza, Gdynia</div>
+          <div class="gem-desc">A WWII destroyer (Norway, Dunkirk, Tobruk — walk bow to stern through every compartment) moored next to a 1909 full-rigged tall ship used for naval training until 1981. Good final stop before the ferry home. Walk from the ferry terminal.</div>
+          <div class="gem-tags"><span class="tag">Gdynia harbour</span><span class="tag">walk through both ships</span><span class="tag">near ferry terminal</span></div>
+          <div class="dest-actions"><button class="btn-star" data-dest="pol-warships">☆ Save</button><button class="btn-check" data-dest="pol-warships">○ Visited</button><button class="btn-detail" data-dest="pol-warships">Full details →</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card pol-card dest-card reveal" data-id="pol-food" data-cats="food" data-country="pol" data-title="Polish Food &amp; Drink" data-eyebrow="Poland · Food &amp; Drink" data-time="" data-cost="" data-transport="" data-modal-desc="Polish food: zapiekanka (open baguette with mushrooms and melted cheese), fresh pierogi (try sauerkraut and mushroom), żurek (sour rye soup with egg and sausage), smoked fish, bigos (hunter's stew), craft beer from Gdańsk's brewing revival.">
+      <div class="card-type">🍽 Food &amp; Drink</div>
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🥙</span><div class="food-name">Zapiekanka</div><div class="food-note">Open baguette with mushrooms and melted cheese. Classic Polish street food.</div></div>
+        <div class="food-item"><span class="food-emoji">🥟</span><div class="food-name">Pierogi (fresh)</div><div class="food-note">Find a place making them fresh. Try sauerkraut and mushroom filling.</div></div>
+        <div class="food-item"><span class="food-emoji">🍲</span><div class="food-name">Żurek</div><div class="food-note">Sour rye soup with egg and sausage. Everywhere in Gdańsk.</div></div>
+        <div class="food-item"><span class="food-emoji">🐟</span><div class="food-name">Smoked fish</div><div class="food-note">The Baltic smoking tradition continues here. Good all along the Polish coast.</div></div>
+        <div class="food-item"><span class="food-emoji">🥘</span><div class="food-name">Bigos</div><div class="food-note">Hunter's stew — sauerkraut, meat, mushrooms. Best from a market stall pot.</div></div>
+        <div class="food-item"><span class="food-emoji">🍺</span><div class="food-name">Craft beer, Gdańsk</div><div class="food-note">Gdańsk's brewing revival. Any craft bar in the Old Town.</div></div>
+      </div>
+      <div class="dest-actions"><button class="btn-star" data-dest="pol-food">☆ Save</button></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TIPS PLACEHOLDER -->
+<!-- TIPS -->
+<section id="tips" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-eyebrow">On the road</div>
+    <div class="chapter-title">Practical <em>Notes</em></div>
+    <div class="chapter-rule"></div>
+  </div>
+  <div class="practical-grid">
+    <div class="prac-card reveal">
+      <div class="prac-title">Wild camping — what is legal</div>
+      <div class="prac-row"><span class="prac-flag">🇪🇪</span><div class="prac-text"><strong>Estonia</strong> — most permissive in Europe. Everyman's Right allows camping on uncultivated land for up to 24h. RMK Forestry runs dozens of free official wild sites (fireplace, sometimes a toilet). Map: loodusegakoos.ee</div></div>
+      <div class="prac-row"><span class="prac-flag">🇱🇻</span><div class="prac-text"><strong>Latvia</strong> — permitted on public land. Avoid nature reserves and private farmland without asking. Generally tolerant of RV overnight stops.</div></div>
+      <div class="prac-row"><span class="prac-flag">🇱🇹</span><div class="prac-text"><strong>Lithuania</strong> — permitted on public land. Limited in national parks and nature reserves. Generally flexible outside those.</div></div>
+      <div class="prac-row"><span class="prac-flag">🇵🇱</span><div class="prac-text"><strong>Poland</strong> — more restrictive. Use Park4Night for community-recommended informal stops. Ask at farms — often warmly received.</div></div>
+    </div>
+
+    <div class="prac-card reveal">
+      <div class="prac-title">Signs to look for on the road</div>
+      <div class="prac-row"><span class="prac-flag">🇪🇪</span><div class="prac-text"><strong>Tuba / Majutus</strong> — room available / accommodation</div></div>
+      <div class="prac-row"><span class="prac-flag">🇱🇻</span><div class="prac-text"><strong>Viesu nams</strong> — guesthouse (literally "guest house")</div></div>
+      <div class="prac-row"><span class="prac-flag">🇱🇹</span><div class="prac-text"><strong>Nakvynė</strong> — overnight accommodation</div></div>
+      <div class="prac-row"><span class="prac-flag">🇵🇱</span><div class="prac-text"><strong>Noclegi</strong> — rooms / accommodation</div></div>
+    </div>
+
+    <div class="prac-card reveal">
+      <div class="prac-title">Apps &amp; Tools</div>
+      <div class="prac-row"><span class="prac-flag">📍</span><div class="prac-text"><strong>Park4Night</strong> — community wild camping and RV parking spots with honest reviews. Most reliable way to find informal stops.</div></div>
+      <div class="prac-row"><span class="prac-flag">🌲</span><div class="prac-text"><strong>loodusegakoos.ee</strong> — Estonia's RMK free campsite map. Download before crossing into Latvia.</div></div>
+      <div class="prac-row"><span class="prac-flag">🤖</span><div class="prac-text"><strong>claude.ai → Baltic Trip 2026</strong> — your AI travel assistant. Works in any phone browser. Ask anything, anywhere, in real time.</div></div>
+    </div>
+
+    <div class="prac-card reveal">
+      <div class="prac-title">Practical notes</div>
+      <div class="prac-row"><span class="prac-flag">⛽</span><div class="prac-text"><strong>Fuel</strong> — significantly cheaper in Lithuania and Poland than in Estonia. Fill up when you cross south.</div></div>
+      <div class="prac-row"><span class="prac-flag">🛣</span><div class="prac-text"><strong>Tolls</strong> — none in Estonia, Latvia, or Lithuania. Poland has motorway tolls; country roads are free.</div></div>
+      <div class="prac-row"><span class="prac-flag">🚢</span><div class="prac-text"><strong>Island ferries</strong> — Kihnu, Muhu, Vormsi, Ruhnu ferries all take vehicles but have limited capacity. Book ahead for July. Weather can cancel Ruhnu without warning.</div></div>
+      <div class="prac-row"><span class="prac-flag">🌡</span><div class="prac-text"><strong>July weather</strong> — typically 18–22°C, long days (18–19h daylight). Pack rain gear regardless — Baltic weather changes fast.</div></div>
+      <div class="prac-row"><span class="prac-flag">🦟</span><div class="prac-text"><strong>Mosquitoes</strong> — fierce near water and forests from dusk. Take repellent seriously, especially in Estonian and Latvian wetlands.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER PLACEHOLDER -->
+<footer>
+  <div class="compass">🧭</div>
+  <p>Built for a July 2026 Baltic RV expedition.<br>
+  For real-time travel help, open <a href="https://claude.ai" target="_blank">claude.ai</a> and use the <em>Baltic Trip 2026</em> project.<br>
+  <span style="opacity:.5;font-size:.72rem">Verified: Kaliningrad inland bypass via Suwałki · Pärnu Medieval Days 3–5 July · Cold War trail: Hara → Karosta → Līgatne → Žemaitija</span></p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-handle"></div>
+    <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+    <div class="modal-eyebrow" id="modal-eyebrow"></div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-desc" id="modal-desc"></p>
+    <div class="modal-details" id="modal-details"></div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-star" id="modal-btn-star">☆ Wishlist</button>
+      <button class="modal-btn modal-btn-check" id="modal-btn-check">○ Mark visited</button>
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fab-surprise" title="Surprise me">🎲</button>
+<div class="fab-tooltip">Surprise me!</div>
+
+<!-- SCRIPT PLACEHOLDER -->
+<script>
+// ── DATA ───────────────────────────────────────────────────────────────
+const WISH_KEY = 'bd2026_wishlist';
+const VISIT_KEY = 'bd2026_visited';
+let wishlist = new Set(JSON.parse(localStorage.getItem(WISH_KEY) || '[]'));
+let visited  = new Set(JSON.parse(localStorage.getItem(VISIT_KEY) || '[]'));
+
+function saveWish()  { localStorage.setItem(WISH_KEY,  JSON.stringify([...wishlist])); }
+function saveVisit() { localStorage.setItem(VISIT_KEY, JSON.stringify([...visited])); }
+
+// ── DOM REFS ────────────────────────────────────────────────────────────
+const destCards   = Array.from(document.querySelectorAll('.dest-card'));
+const filterPills = Array.from(document.querySelectorAll('.filter-pill'));
+const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
+const btnAllView  = document.getElementById('btn-all-view');
+const btnWishView = document.getElementById('btn-wishlist-view');
+const btnVisitView= document.getElementById('btn-visited-view');
+const viewCountLbl= document.getElementById('view-count-label');
+const visitCount  = document.getElementById('visit-count');
+const visitTotal  = document.getElementById('visit-total');
+const modalOverlay= document.getElementById('modal-overlay');
+const modalBox    = document.getElementById('modal-box');
+const modalClose  = document.getElementById('modal-close');
+const fab         = document.getElementById('fab-surprise');
+
+let activeCat  = 'all';
+let activeView = 'all'; // 'all' | 'wishlist' | 'visited'
+let currentModalId = null;
+
+// ── INIT ────────────────────────────────────────────────────────────────
+function init() {
+  // Count total non-food/non-sleep destinations for the progress tracker
+    visitTotal.textContent = destCards.filter(c => {
+    const id = c.dataset.id || '';
+    return id && !id.endsWith('-food') && !id.endsWith('-sleep');
+  }).length;
+
+  updateAllButtonStates();
+  updateVisitCount();
+  applyFilters();
+}
+
+function updateVisitCount() {
+  visitCount.textContent = visited.size;
+}
+
+// ── FILTER ENGINE ────────────────────────────────────────────────────────
+function applyFilters() {
+  const query = searchInput.value.trim().toLowerCase();
+  let visibleCount = 0;
+
+  destCards.forEach(card => {
+    const cats    = (card.dataset.cats || '').split(' ');
+    const id      = card.dataset.id || '';
+    const title   = (card.dataset.title || '').toLowerCase();
+    const desc    = (card.querySelector('.gem-desc') || {}).textContent || '';
+    const country = card.dataset.country || '';
+
+    // Category filter
+    const catMatch = (activeCat === 'all') || cats.includes(activeCat);
+
+    // Search filter
+    const searchMatch = !query || title.includes(query) || desc.toLowerCase().includes(query) ||
+      (card.dataset.modalDesc || '').toLowerCase().includes(query) ||
+      country.includes(query);
+
+    // View filter
+    let viewMatch = true;
+    if (activeView === 'wishlist') viewMatch = wishlist.has(id);
+    if (activeView === 'visited')  viewMatch = visited.has(id);
+
+    const show = catMatch && searchMatch && viewMatch;
+    card.classList.toggle('hidden', !show);
+    if (show) visibleCount++;
+  });
+
+  // Update section empty states
+  ['estonia','latvia','lithuania','poland'].forEach(sec => {
+    const section = document.getElementById(sec);
+    if (!section) return;
+    const cards = section.querySelectorAll('.dest-card');
+    const anyVisible = Array.from(cards).some(c => !c.classList.contains('hidden'));
+    section.classList.toggle('all-hidden', !anyVisible);
+  });
+
+  // Update view count label
+  if (activeView === 'wishlist') viewCountLbl.textContent = visibleCount + ' saved';
+  else if (activeView === 'visited') viewCountLbl.textContent = visibleCount + ' visited';
+  else viewCountLbl.textContent = '';
+}
+
+// ── FILTER BAR ───────────────────────────────────────────────────────────
+filterPills.forEach(pill => {
+  pill.addEventListener('click', () => {
+    filterPills.forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    activeCat = pill.dataset.cat;
+    applyFilters();
+  });
+});
+
+// ── SEARCH ───────────────────────────────────────────────────────────────
+searchInput.addEventListener('input', () => {
+  searchClear.classList.toggle('show', searchInput.value.length > 0);
+  applyFilters();
+});
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchClear.classList.remove('show');
+  applyFilters();
+});
+
+// ── VIEW TOGGLES ─────────────────────────────────────────────────────────
+function setView(v) {
+  activeView = v;
+  [btnAllView, btnWishView, btnVisitView].forEach(b => b.classList.remove('active'));
+  if (v === 'all')      btnAllView.classList.add('active');
+  if (v === 'wishlist') btnWishView.classList.add('active');
+  if (v === 'visited')  btnVisitView.classList.add('active');
+  applyFilters();
+}
+btnAllView.addEventListener('click',   () => setView('all'));
+btnWishView.addEventListener('click',  () => setView('wishlist'));
+btnVisitView.addEventListener('click', () => setView('visited'));
+
+// ── WISHLIST & VISITED BUTTONS ────────────────────────────────────────────
+function toggleWish(id) {
+  if (wishlist.has(id)) wishlist.delete(id); else wishlist.add(id);
+  saveWish();
+  updateAllButtonStates();
+  if (activeView === 'wishlist') applyFilters();
+}
+function toggleVisit(id) {
+  if (visited.has(id)) visited.delete(id); else visited.add(id);
+  saveVisit();
+  updateVisitCount();
+  updateAllButtonStates();
+  if (activeView === 'visited') applyFilters();
+}
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('btn-star')) {
+    const id = e.target.dataset.dest;
+    if (id) { toggleWish(id); updateModalButtons(); }
+  }
+  if (e.target.classList.contains('btn-check')) {
+    const id = e.target.dataset.dest;
+    if (id) { toggleVisit(id); updateModalButtons(); }
+  }
+  if (e.target.classList.contains('btn-detail')) {
+    const id = e.target.dataset.dest;
+    if (id) openModal(id);
+  }
+});
+
+function updateAllButtonStates() {
+  document.querySelectorAll('.btn-star').forEach(btn => {
+    const id = btn.dataset.dest;
+    btn.classList.toggle('saved', wishlist.has(id));
+    btn.textContent = wishlist.has(id) ? '★ Saved' : '☆ Save';
+  });
+  document.querySelectorAll('.btn-check').forEach(btn => {
+    const id = btn.dataset.dest;
+    btn.classList.toggle('done', visited.has(id));
+    btn.textContent = visited.has(id) ? '✓ Visited' : '○ Visited';
+  });
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────
+function openModal(id) {
+  const card = document.querySelector('.dest-card[data-id="' + id + '"]');
+  if (!card) return;
+  currentModalId = id;
+
+  document.getElementById('modal-eyebrow').textContent = card.dataset.eyebrow || '';
+  document.getElementById('modal-title').textContent   = card.dataset.title   || '';
+  document.getElementById('modal-desc').textContent    = card.dataset.modalDesc || '';
+
+  const details = document.getElementById('modal-details');
+  details.innerHTML = '';
+  const rows = [
+    { icon: '⏱', label: 'Time', val: card.dataset.time },
+    { icon: '💶', label: 'Cost', val: card.dataset.cost },
+    { icon: '🚗', label: 'Getting there', val: card.dataset.transport }
+  ];
+  rows.forEach(r => {
+    if (!r.val) return;
+    const row = document.createElement('div');
+    row.className = 'modal-detail-row';
+    row.innerHTML = '<span class="modal-detail-icon">' + r.icon + '</span>' +
+      '<span class="modal-detail-text"><strong>' + r.label + ':</strong> ' + r.val + '</span>';
+    details.appendChild(row);
+  });
+
+  updateModalButtons();
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateModalButtons() {
+  const id = currentModalId;
+  if (!id) return;
+  const starBtn  = document.getElementById('modal-btn-star');
+  const checkBtn = document.getElementById('modal-btn-check');
+  starBtn.classList.toggle('saved', wishlist.has(id));
+  starBtn.textContent = wishlist.has(id) ? '★ In wishlist' : '☆ Wishlist';
+  checkBtn.classList.toggle('done', visited.has(id));
+  checkBtn.textContent = visited.has(id) ? '✓ Visited' : '○ Mark visited';
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  currentModalId = null;
+}
+
+modalClose.addEventListener('click', closeModal);
+document.getElementById('modal-btn-star').addEventListener('click', () => {
+  if (currentModalId) { toggleWish(currentModalId); updateModalButtons(); }
+});
+document.getElementById('modal-btn-check').addEventListener('click', () => {
+  if (currentModalId) { toggleVisit(currentModalId); updateModalButtons(); }
+});
+modalOverlay.addEventListener('click', e => {
+  if (e.target === modalOverlay) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
+});
+
+// swipe down to close modal
+let touchStartY = 0;
+modalBox.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, {passive:true});
+modalBox.addEventListener('touchend', e => {
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (dy > 60) closeModal();
+}, {passive:true});
+
+// ── FAB: SURPRISE ME ─────────────────────────────────────────────────────
+fab.addEventListener('click', () => {
+  const visible = destCards.filter(c => {
+    const id = c.dataset.id || '';
+    return !c.classList.contains('hidden') &&
+           id && !id.endsWith('-food') && !id.endsWith('-sleep');
+  });
+  if (visible.length === 0) return;
+  const pick = visible[Math.floor(Math.random() * visible.length)];
+  // Scroll to the card first
+  pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => openModal(pick.dataset.id), 400);
+});
+
+// ── MAP STOP MARKERS ──────────────────────────────────────────────────────
+document.querySelectorAll('.stop-group').forEach(stop => {
+  stop.addEventListener('click', () => {
+    const target = stop.dataset.target;
+    const section = document.getElementById(target);
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── ROUTE SVG ANIMATION ────────────────────────────────────────────────────
+const routeLine = document.getElementById('route-line');
+if (routeLine) {
+  const len = routeLine.getTotalLength ? routeLine.getTotalLength() : 800;
+  routeLine.style.strokeDasharray = len;
+  routeLine.style.strokeDashoffset = len;
+  routeLine.style.transition = 'none';
+  const mapObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        routeLine.style.transition = 'stroke-dashoffset 2.5s ease';
+        routeLine.style.strokeDashoffset = '0';
+        mapObs.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  mapObs.observe(routeLine.closest('svg'));
+}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── ACTIVE NAV ────────────────────────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.country-nav a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}, { passive: true });
+
+// ── BOOT ──────────────────────────────────────────────────────────────────
+init();
+</script>
+
+</body>
+</html>
