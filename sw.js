@@ -1,10 +1,9 @@
 // Baltic Dispatch 2026 — Service Worker
-// Caches the app shell + Leaflet tiles for offline use.
-const CACHE_VERSION = 'baltic-v1';
-const SHELL_CACHE   = 'baltic-shell-v1';
-const TILE_CACHE    = 'baltic-tiles-v1';
+// !! Bump CACHE_VERSION on every deploy to force phones to update !!
+const CACHE_VERSION = 'baltic-v6';
+const SHELL_CACHE   = `baltic-shell-${CACHE_VERSION}`;
+const TILE_CACHE    = 'baltic-tiles-v1';  // tiles accumulate, never bust
 
-// Files to cache on install
 const SHELL_ASSETS = [
   './app.html',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
@@ -19,31 +18,65 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(SHELL_CACHE)
       .then(cache => cache.addAll(SHELL_ASSETS))
-      .then(() => self.skipWaiting())
+      .then(() => self.skipWaiting())   // activate immediately, don't wait
   );
 });
 
-// ── ACTIVATE: clean old caches ────────────────────────────────
+// ── ACTIVATE: delete ALL old shell caches ────────────────────
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
         keys
-          .filter(k => k !== SHELL_CACHE && k !== TILE_CACHE)
-          .map(k => caches.delete(k))
+          .filter(k => k.startsWith('baltic-shell-') && k !== SHELL_CACHE)
+          .map(k  => caches.delete(k))
       )
-    ).then(() => self.clients.claim())
+    ).then(() => self.clients.claim())  // take control of open tabs now
   );
 });
 
-// ── FETCH: serve from cache, fall back to network ─────────────
+// ── FETCH ─────────────────────────────────────────────────────
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Map tiles: network-first, cache on success
-  if (url.hostname.endsWith('tile.openstreetmap.org') ||
-      url.hostname.includes('unpkg.com')) {
+  // ── app.html: NETWORK-FIRST ──────────────────────────────────
+  // Always try the network so updates arrive immediately.
+  // Only fall back to cache when genuinely offline.
+  if (url.pathname.endsWith('app.html') || url.pathname === '/' ||
+      url.pathname.endsWith('/index.html')) {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(SHELL_CACHE).then(c => c.put(request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request))   // offline → serve cache
+    );
+    return;
+  }
+
+  // ── Leaflet + other CDN assets: cache-first (rarely change) ──
+  if (url.hostname.includes('unpkg.com')) {
+    event.respondWith(
+      caches.match(request).then(cached => {
+        if (cached) return cached;
+        return fetch(request).then(response => {
+          if (response.ok) {
+            caches.open(SHELL_CACHE).then(c => c.put(request, response.clone()));
+          }
+          return response;
+        });
+      })
+    );
+    return;
+  }
+
+  // ── Map tiles: cache-on-browse (accumulate as you explore) ───
+  if (url.hostname.endsWith('tile.openstreetmap.org')) {
     event.respondWith(
       caches.open(TILE_CACHE).then(cache =>
         cache.match(request).then(cached => {
@@ -51,24 +84,16 @@ self.addEventListener('fetch', event => {
           return fetch(request).then(response => {
             if (response.ok) cache.put(request, response.clone());
             return response;
-          }).catch(() => cached); // offline and not in cache → undefined (tiles just blank)
+          }).catch(() => cached);
         })
       )
     );
     return;
   }
 
-  // App shell: cache-first
+  // ── Everything else: network with cache fallback ──────────────
   event.respondWith(
-    caches.match(request).then(cached => {
-      if (cached) return cached;
-      return fetch(request).then(response => {
-        if (response.ok) {
-          const clone = response.clone();
-          caches.open(SHELL_CACHE).then(c => c.put(request, clone));
-        }
-        return response;
-      }).catch(() => caches.match('./app.html')); // offline fallback
-    })
+    fetch(request)
+      .catch(() => caches.match(request))
   );
 });

@@ -1,11 +1,11 @@
 {
-  "name": "Baltic Dispatch 2026",
-  "short_name": "Baltic Trip",
-  "description": "RV trip guide: Estonia → Latvia → Lithuania → Poland. 282 offline-ready entries.",
+  "name": "Boba-Baltic 26",
+  "short_name": "Boba-Baltic 26",
+  "description": "RV trip guide: Estonia \u2192 Latvia \u2192 Lithuania \u2192 Poland. 282 offline-ready entries.",
   "start_url": "./app.html",
   "display": "standalone",
-  "background_color": "#0e1117",
-  "theme_color": "#0e1117",
+  "background_color": "#fff8f4",
+  "theme_color": "#ffc3ac",
   "orientation": "portrait",
   "icons": [
     {
@@ -21,6 +21,9 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["travel", "navigation"],
+  "categories": [
+    "travel",
+    "navigation"
+  ],
   "lang": "en"
 }
