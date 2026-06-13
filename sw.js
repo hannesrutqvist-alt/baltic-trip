@@ -1,99 +1,84 @@
-// Baltic Dispatch 2026 — Service Worker
 // !! Bump CACHE_VERSION on every deploy to force phones to update !!
-const CACHE_VERSION = 'baltic-v6';
+const CACHE_VERSION = 'baltic-v45';
 const SHELL_CACHE   = `baltic-shell-${CACHE_VERSION}`;
-const TILE_CACHE    = 'baltic-tiles-v1';  // tiles accumulate, never bust
+const TILE_CACHE    = 'baltic-tiles-v1';
+const WIKI_CACHE    = 'baltic-wiki-v1';
 
 const SHELL_ASSETS = [
-  './app.html',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-  'https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css',
-  'https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css',
-  'https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
+  '/',
+  '/app.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
-// ── INSTALL: pre-cache app shell ──────────────────────────────
+// ── Install: cache shell assets ──────────────────────────────
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(SHELL_CACHE)
       .then(cache => cache.addAll(SHELL_ASSETS))
-      .then(() => self.skipWaiting())   // activate immediately, don't wait
+      .then(() => self.skipWaiting())
   );
 });
 
-// ── ACTIVATE: delete ALL old shell caches ────────────────────
+// ── Activate: purge old shell caches (keep tiles + wiki) ─────
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys
-          .filter(k => k.startsWith('baltic-shell-') && k !== SHELL_CACHE)
-          .map(k  => caches.delete(k))
+        keys.filter(k => k.startsWith('baltic-shell-') && k !== SHELL_CACHE)
+            .map(k => caches.delete(k))
       )
-    ).then(() => self.clients.claim())  // take control of open tabs now
+    ).then(() => self.clients.claim())
   );
 });
 
-// ── FETCH ─────────────────────────────────────────────────────
+// ── Fetch: shell → cache-first; tiles & wiki → cache-first with network fallback ─
 self.addEventListener('fetch', event => {
-  const { request } = event;
-  const url = new URL(request.url);
+  const url = new URL(event.request.url);
 
-  // ── app.html: NETWORK-FIRST ──────────────────────────────────
-  // Always try the network so updates arrive immediately.
-  // Only fall back to cache when genuinely offline.
-  if (url.pathname.endsWith('app.html') || url.pathname === '/' ||
-      url.pathname.endsWith('/index.html')) {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(SHELL_CACHE).then(c => c.put(request, clone));
-          }
-          return response;
-        })
-        .catch(() => caches.match(request))   // offline → serve cache
-    );
-    return;
-  }
-
-  // ── Leaflet + other CDN assets: cache-first (rarely change) ──
-  if (url.hostname.includes('unpkg.com')) {
-    event.respondWith(
-      caches.match(request).then(cached => {
-        if (cached) return cached;
-        return fetch(request).then(response => {
-          if (response.ok) {
-            caches.open(SHELL_CACHE).then(c => c.put(request, response.clone()));
-          }
-          return response;
-        });
-      })
-    );
-    return;
-  }
-
-  // ── Map tiles: cache-on-browse (accumulate as you explore) ───
-  if (url.hostname.endsWith('tile.openstreetmap.org')) {
+  // Map tiles
+  if (url.hostname.endsWith('tile.openstreetmap.org') ||
+      url.hostname.endsWith('openstreetmap.org')) {
     event.respondWith(
       caches.open(TILE_CACHE).then(cache =>
-        cache.match(request).then(cached => {
-          if (cached) return cached;
-          return fetch(request).then(response => {
-            if (response.ok) cache.put(request, response.clone());
-            return response;
-          }).catch(() => cached);
+        cache.match(event.request).then(hit => {
+          if (hit) return hit;
+          return fetch(event.request).then(res => {
+            if (res.ok) cache.put(event.request, res.clone());
+            return res;
+          }).catch(() => new Response('', {status: 503}));
         })
       )
     );
     return;
   }
 
-  // ── Everything else: network with cache fallback ──────────────
-  event.respondWith(
-    fetch(request)
-      .catch(() => caches.match(request))
-  );
+  // Wikipedia thumbnails
+  if (url.hostname === 'en.wikipedia.org' || url.hostname.endsWith('.wikipedia.org') ||
+      url.hostname === 'upload.wikimedia.org') {
+    event.respondWith(
+      caches.open(WIKI_CACHE).then(cache =>
+        cache.match(event.request).then(hit => {
+          if (hit) return hit;
+          return fetch(event.request).then(res => {
+            if (res.ok) cache.put(event.request, res.clone());
+            return res;
+          }).catch(() => new Response('', {status: 503}));
+        })
+      )
+    );
+    return;
+  }
+
+  // Shell assets — cache first
+  if (SHELL_ASSETS.some(a => url.pathname === a) ||
+      url.pathname === '/app.html' || url.pathname === '/') {
+    event.respondWith(
+      caches.open(SHELL_CACHE).then(cache =>
+        cache.match(event.request).then(hit => hit || fetch(event.request))
+      )
+    );
+    return;
+  }
 });
